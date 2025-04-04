@@ -23,6 +23,10 @@ class Megamenu_Settings {
         
         // Add admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
+        
+        // Register AJAX handlers
+        add_action('wp_ajax_get_menu_items', array($this, 'ajax_get_menu_items'));
+        add_action('wp_ajax_get_available_menus', array($this, 'ajax_get_available_menus'));
     }
     
     /**
@@ -66,18 +70,134 @@ class Megamenu_Settings {
             true
         );
         
+        // Get current configuration
+        $config = get_option('megamenu_config', array(
+            'top_menu' => '',
+            'submenu_columns' => array()
+        ));
+        
         wp_localize_script('megamenu-admin', 'megamenuAdmin', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('megamenu-admin-nonce')
         ));
+        
+        // Pass the current configuration to JavaScript
+        wp_localize_script('megamenu-admin', 'megamenuConfig', $config);
+    }
+    
+    /**
+     * AJAX handler for getting menu items
+     */
+    public function ajax_get_menu_items() {
+        // Check nonce for security
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'megamenu-admin-nonce')) {
+            wp_send_json_error(array('message' => 'Security check failed.'));
+        }
+        
+        // Check if menu_id is set
+        if (!isset($_POST['menu_id']) || empty($_POST['menu_id'])) {
+            wp_send_json_error(array('message' => 'Menu ID is required.'));
+        }
+        
+        $menu_id = intval($_POST['menu_id']);
+        $menu_items = wp_get_nav_menu_items($menu_id);
+        
+        if (!$menu_items) {
+            wp_send_json_error(array('message' => 'No menu items found.'));
+        }
+        
+        // Format menu items for the frontend
+        $formatted_items = array();
+        foreach ($menu_items as $item) {
+            $formatted_items[] = array(
+                'ID' => $item->ID,
+                'title' => $item->title,
+                'url' => $item->url,
+                'parent' => $item->menu_item_parent
+            );
+        }
+        
+        wp_send_json_success(array('items' => $formatted_items));
+    }
+    
+    /**
+     * AJAX handler for getting available menus
+     */
+    public function ajax_get_available_menus() {
+        // Check nonce for security
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'megamenu-admin-nonce')) {
+            wp_send_json_error(array('message' => 'Security check failed.'));
+        }
+        
+        $menus = wp_get_nav_menus();
+        
+        if (!$menus) {
+            wp_send_json_error(array('message' => 'No menus found.'));
+        }
+        
+        // Format menus for the frontend
+        $formatted_menus = array();
+        foreach ($menus as $menu) {
+            $formatted_menus[] = array(
+                'term_id' => $menu->term_id,
+                'name' => $menu->name
+            );
+        }
+        
+        wp_send_json_success(array('menus' => $formatted_menus));
     }
     
     /**
      * Sanitize settings
      */
     public function sanitize_settings($input) {
-        // Sanitization logic here
-        return $input;
+        $sanitized = array();
+        
+        // Sanitize top menu
+        if (isset($input['top_menu'])) {
+            $sanitized['top_menu'] = absint($input['top_menu']);
+        } else {
+            $sanitized['top_menu'] = '';
+        }
+        
+        // Sanitize submenu columns
+        if (isset($input['submenu_columns']) && is_array($input['submenu_columns'])) {
+            $sanitized['submenu_columns'] = array();
+            
+            foreach ($input['submenu_columns'] as $top_item_id => $columns) {
+                if (!is_array($columns)) {
+                    continue;
+                }
+                
+                $sanitized_columns = array();
+                
+                foreach ($columns as $column_index => $column) {
+                    if (!isset($column['menus']) || !is_array($column['menus'])) {
+                        continue;
+                    }
+                    
+                    $sanitized_menus = array();
+                    
+                    foreach ($column['menus'] as $menu_id) {
+                        $sanitized_menus[] = absint($menu_id);
+                    }
+                    
+                    if (!empty($sanitized_menus)) {
+                        $sanitized_columns[] = array(
+                            'menus' => $sanitized_menus
+                        );
+                    }
+                }
+                
+                if (!empty($sanitized_columns)) {
+                    $sanitized['submenu_columns'][$top_item_id] = $sanitized_columns;
+                }
+            }
+        } else {
+            $sanitized['submenu_columns'] = array();
+        }
+        
+        return $sanitized;
     }
     
     /**
