@@ -177,15 +177,18 @@
 /* Featured image column */
 .megamenu-container .submenu .featured-image-column {
   flex: 0 0 250px;
-  padding: 0 15px;
+  padding: 10px 15px 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .megamenu-container .submenu .featured-image {
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  margin: 0;
+  padding: 0;
 }
 
 .megamenu-container .submenu .featured-image img {
@@ -193,6 +196,7 @@
   max-height: 300px;
   object-fit: cover;
   border-radius: 4px;
+  display: block;
 }
 
 /* Submenu wrapper */
@@ -237,10 +241,11 @@
 
 /* Horizontal menu */
 .megamenu-container .submenu .column .horizontal-menu {
-  flex: 1 1 40%;
-  margin: 0 5px 15px;
+  flex: 0 0 50%;
+  margin: 0 0 15px 0;
   box-sizing: border-box;
   min-width: 0;
+  padding: 0 5px;
 }
 
 /* Menus within columns */
