@@ -166,6 +166,7 @@ class MegaMenu extends Component {
               columns={data.subMenus[activeMenu]} 
               isMobileView={isMobileView}
               parentId={activeMenu}
+              featuredImage={data.submenuImages && data.submenuImages[activeMenu]}
             />
           </div>
         )}

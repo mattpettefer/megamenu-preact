@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -26,7 +27,10 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
+          use: [
+            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader'
+          ],
         },
       ],
     },
@@ -38,6 +42,12 @@ module.exports = (env, argv) => {
       },
     },
     plugins: [
+      // Extract CSS in production mode
+      ...(isProduction ? [
+        new MiniCssExtractPlugin({
+          filename: 'megamenu.css',
+        }),
+      ] : []),
       // Only use HtmlWebpackPlugin in development mode
       ...(isProduction ? [] : [
         new HtmlWebpackPlugin({

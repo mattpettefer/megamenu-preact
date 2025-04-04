@@ -21,12 +21,13 @@ class Megamenu_Settings {
         // Register settings
         add_action('admin_init', array($this, 'register_settings'));
         
-        // Add admin scripts
+        // Enqueue admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         
         // Register AJAX handlers
         add_action('wp_ajax_get_menu_items', array($this, 'ajax_get_menu_items'));
         add_action('wp_ajax_get_available_menus', array($this, 'ajax_get_available_menus'));
+        add_action('wp_ajax_get_image_url', array($this, 'ajax_get_image_url'));
     }
     
     /**
@@ -62,6 +63,9 @@ class Megamenu_Settings {
             return;
         }
         
+        // Enqueue WordPress media scripts
+        wp_enqueue_media();
+        
         wp_enqueue_script(
             'megamenu-admin',
             MEGAMENU_PREACT_URL . 'admin/js/admin.js',
@@ -73,7 +77,8 @@ class Megamenu_Settings {
         // Get current configuration
         $config = get_option('megamenu_config', array(
             'top_menu' => '',
-            'submenu_columns' => array()
+            'submenu_columns' => array(),
+            'submenu_images' => array()
         ));
         
         wp_localize_script('megamenu-admin', 'megamenuAdmin', array(
@@ -148,6 +153,33 @@ class Megamenu_Settings {
     }
     
     /**
+     * AJAX handler for getting image URL
+     */
+    public function ajax_get_image_url() {
+        // Check nonce
+        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'megamenu-admin-nonce')) {
+            wp_send_json_error(array('message' => 'Invalid security token'));
+            return;
+        }
+        
+        // Check image ID
+        if (!isset($_POST['image_id']) || !absint($_POST['image_id'])) {
+            wp_send_json_error(array('message' => 'Invalid image ID'));
+            return;
+        }
+        
+        $image_id = absint($_POST['image_id']);
+        $image_url = wp_get_attachment_image_url($image_id, 'medium');
+        
+        if (!$image_url) {
+            wp_send_json_error(array('message' => 'Image not found'));
+            return;
+        }
+        
+        wp_send_json_success(array('url' => $image_url));
+    }
+    
+    /**
      * Sanitize settings
      */
     public function sanitize_settings($input) {
@@ -158,6 +190,19 @@ class Megamenu_Settings {
             $sanitized['top_menu'] = absint($input['top_menu']);
         } else {
             $sanitized['top_menu'] = '';
+        }
+        
+        // Sanitize submenu images
+        if (isset($input['submenu_images']) && is_array($input['submenu_images'])) {
+            $sanitized['submenu_images'] = array();
+            
+            foreach ($input['submenu_images'] as $item_id => $image_id) {
+                if (!empty($image_id)) {
+                    $sanitized['submenu_images'][$item_id] = absint($image_id);
+                }
+            }
+        } else {
+            $sanitized['submenu_images'] = array();
         }
         
         // Sanitize submenu columns
@@ -210,7 +255,8 @@ class Megamenu_Settings {
         // Get current configuration
         $config = get_option('megamenu_config', array(
             'top_menu' => '',
-            'submenu_columns' => array()
+            'submenu_columns' => array(),
+            'submenu_images' => array()
         ));
         
         ?>

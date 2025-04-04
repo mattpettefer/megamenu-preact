@@ -92,7 +92,19 @@
                 html += `
                     <div class="submenu-item" data-item-id="${item.ID}">
                         <h4>${item.title}</h4>
+                        
+                        <div class="submenu-image-selector">
+                            <h5>Featured Image</h5>
+                            <div class="image-preview-container">
+                                <div class="image-preview"></div>
+                                <input type="hidden" name="megamenu_config[submenu_images][${item.ID}]" class="image-id" value="">
+                                <button type="button" class="button select-image">Select Image</button>
+                                <button type="button" class="button remove-image" style="display:none;">Remove Image</button>
+                            </div>
+                        </div>
+                        
                         <div class="columns">
+                            <h5>Menu Columns</h5>
                             <div class="column-container"></div>
                             <button type="button" class="button add-column" data-item-id="${item.ID}">Add Column</button>
                         </div>
@@ -106,12 +118,76 @@
             
             // Attach event handlers
             $('.add-column').on('click', addColumn);
+            $('.select-image').on('click', selectImage);
+            $('.remove-image').on('click', removeImage);
             
             // Now that the menu items are rendered, load the existing configuration
             if (config && config.submenu_columns) {
                 console.log('Loading existing configuration after rendering menu items');
                 loadExistingConfig(config);
             }
+        }
+        
+        // Media uploader for selecting images
+        let mediaUploader;
+        
+        // Select image handler
+        function selectImage() {
+            const $button = $(this);
+            const $container = $button.closest('.image-preview-container');
+            const $preview = $container.find('.image-preview');
+            const $imageId = $container.find('.image-id');
+            const $removeButton = $container.find('.remove-image');
+            
+            // If the media uploader already exists, open it
+            if (mediaUploader) {
+                mediaUploader.open();
+                return;
+            }
+            
+            // Create the media uploader
+            mediaUploader = wp.media({
+                title: 'Select Submenu Image',
+                button: {
+                    text: 'Use this image'
+                },
+                multiple: false
+            });
+            
+            // When an image is selected
+            mediaUploader.on('select', function() {
+                const attachment = mediaUploader.state().get('selection').first().toJSON();
+                console.log('Selected image:', attachment);
+                
+                // Set the image preview
+                $preview.html(`<img src="${attachment.url}" alt="Submenu Image" style="max-width:100%; max-height:150px;">`);
+                
+                // Set the image ID in the hidden input
+                $imageId.val(attachment.id);
+                
+                // Show the remove button
+                $removeButton.show();
+            });
+            
+            // Open the uploader
+            mediaUploader.open();
+        }
+        
+        // Remove image handler
+        function removeImage() {
+            const $button = $(this);
+            const $container = $button.closest('.image-preview-container');
+            const $preview = $container.find('.image-preview');
+            const $imageId = $container.find('.image-id');
+            
+            // Clear the preview
+            $preview.empty();
+            
+            // Clear the image ID
+            $imageId.val('');
+            
+            // Hide the remove button
+            $button.hide();
         }
         
         // Add a new column
@@ -200,6 +276,41 @@
         function loadExistingConfig(config) {
             console.log('loadExistingConfig called with config:', config);
             
+            // Load submenu images
+            if (config.submenu_images) {
+                Object.keys(config.submenu_images).forEach(function(itemId) {
+                    const imageId = config.submenu_images[itemId];
+                    if (imageId) {
+                        const $submenuItem = $(`.submenu-item[data-item-id="${itemId}"]`);
+                        if ($submenuItem.length) {
+                            const $imageId = $submenuItem.find('.image-id');
+                            const $preview = $submenuItem.find('.image-preview');
+                            const $removeButton = $submenuItem.find('.remove-image');
+                            
+                            $imageId.val(imageId);
+                            
+                            // Get the image URL via AJAX
+                            $.ajax({
+                                url: megamenuAdmin.ajaxUrl,
+                                type: 'POST',
+                                data: {
+                                    action: 'get_image_url',
+                                    image_id: imageId,
+                                    nonce: megamenuAdmin.nonce
+                                },
+                                success: function(response) {
+                                    if (response.success && response.data.url) {
+                                        $preview.html(`<img src="${response.data.url}" alt="Submenu Image" style="max-width:100%; max-height:150px;">`);
+                                        $removeButton.show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+            
+            // Load submenu columns
             if (!config.submenu_columns) {
                 console.log('No submenu columns found in config');
                 return;

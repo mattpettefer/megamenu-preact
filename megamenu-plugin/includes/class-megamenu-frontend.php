@@ -63,7 +63,8 @@ class Megamenu_Frontend {
         // Get configuration
         $config = get_option('megamenu_config', array(
             'top_menu' => '',
-            'submenu_columns' => array()
+            'submenu_columns' => array(),
+            'submenu_images' => array()
         ));
         
         // If no top menu is selected, return
@@ -145,12 +146,26 @@ class Megamenu_Frontend {
             $submenu_data[$top_item_id] = $column_data;
         }
         
+        // Prepare submenu images data
+        $submenu_images = array();
+        if (!empty($config['submenu_images']) && is_array($config['submenu_images'])) {
+            foreach ($config['submenu_images'] as $top_item_id => $image_id) {
+                if (!empty($image_id)) {
+                    $image_url = wp_get_attachment_image_url($image_id, 'medium');
+                    if ($image_url) {
+                        $submenu_images[$top_item_id] = $image_url;
+                    }
+                }
+            }
+        }
+        
         return array(
             'topMenu' => array(
                 'id' => $config['top_menu'],
                 'items' => $top_menu_data
             ),
-            'subMenus' => $submenu_data
+            'subMenus' => $submenu_data,
+            'submenuImages' => $submenu_images
         );
     }
 }

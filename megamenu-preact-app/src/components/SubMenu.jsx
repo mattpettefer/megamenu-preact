@@ -8,8 +8,9 @@ import { h } from 'preact';
  * @param {Array} props.columns - Array of column objects
  * @param {boolean} props.isMobileView - Whether the current view is mobile
  * @param {number} props.parentId - ID of the parent menu item
+ * @param {string} props.featuredImage - URL of the featured image for this submenu
  */
-const SubMenu = ({ columns, isMobileView, parentId }) => {
+const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
   if (!columns || !columns.length) {
     return null;
   }
@@ -20,6 +21,16 @@ const SubMenu = ({ columns, isMobileView, parentId }) => {
       role="region"
       aria-label={`Submenu for item ${parentId}`}
     >
+      {/* Featured image column */}
+      {featuredImage && (
+        <div className="column featured-image-column">
+          <div className="featured-image">
+            <img src={featuredImage} alt={`Featured image for submenu ${parentId}`} />
+          </div>
+        </div>
+      )}
+      
+      {/* Menu columns */}
       {columns.map((column, columnIndex) => (
         <div key={columnIndex} className="column">
           {column.menus && column.menus.map((menu) => (
