@@ -103,12 +103,31 @@
   color: #333;
   text-decoration: none;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.megamenu .top-menu li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 5px;
+  left: 50%;
+  background-color: #006633;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+  border-radius: 3px;
 }
 
 .megamenu .top-menu li:hover a,
 .megamenu .top-menu li.active a {
-  background-color: #f5f5f5;
+  background-color: transparent;
+}
+
+.megamenu .top-menu li:hover a::after,
+.megamenu .top-menu li.active a::after {
+  width: 60%;
 }
 
 /* Dropdown indicator for mobile */
@@ -127,39 +146,33 @@
   transform: rotate(180deg);
 }
 
-/* Submenu wrapper */
-.submenu-wrapper {
-  width: 100%;
-  background-color: #f5f5f5;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
-/* Submenu */
+/* Main submenu layout */
 .megamenu-container .submenu {
-  position: relative;
-  width: 100%;
   display: flex;
-  padding: 20px;
-  box-sizing: border-box;
+  flex-wrap: wrap;
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  background-color: #fff;
+  position: absolute;
+  z-index: 100;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  padding: 20px 0;
+  border-radius: 0 0 4px 4px;
 }
 
-/* Columns */
+/* Columns within submenu */
 .megamenu-container .submenu .column {
-  flex: 1;
+  flex: 0 0 33.33%;
+  max-width: 33.33%;
   padding: 0 15px;
-  min-width: 200px;
+  box-sizing: border-box;
 }
 
 /* Featured image column */
 .megamenu-container .submenu .featured-image-column {
-  flex: 0 0 250px;
-  margin-right: 20px;
+  flex: 0 0 33.33%;
+  max-width: 33.33%;
+  padding: 0 15px;
 }
 
 .megamenu-container .submenu .featured-image {
@@ -177,14 +190,62 @@
   border-radius: 4px;
 }
 
-/* Menus within columns */
-.megamenu-container .submenu .column .menu {
-  list-style: none;
+/* Submenu wrapper */
+.submenu-wrapper {
+  width: 100%;
+  background-color: #f5f5f5;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+/* Menus containers */
+.megamenu-container .submenu .column .menus-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Vertical container */
+.megamenu-container .submenu .column .vertical-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+/* Horizontal container */
+.megamenu-container .submenu .column .horizontal-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+/* Vertical menu (default) */
+.megamenu-container .submenu .column .vertical-menu {
+  display: block;
+  width: 100%;
   margin: 0 0 20px 0;
+  box-sizing: border-box;
+}
+
+/* Horizontal menu */
+.megamenu-container .submenu .column .horizontal-menu {
+  flex: 1 0 50%;
+  max-width: calc(50% - 20px);
+  margin: 0 10px 20px;
+  box-sizing: border-box;
+}
+
+/* Menus within columns */
+.megamenu-container .submenu .column .menus-container .menu {
+  list-style: none;
   padding: 0;
   border-top: 2px solid #e0e0e0;
 }
 
+/* Menu items */
 .megamenu-container .submenu .column .menu li {
   margin: 0;
   padding: 0;
@@ -195,13 +256,54 @@
   padding: 8px 0;
   color: #333;
   text-decoration: none;
-  font-weight: normal;
   font-size: 14px;
+  border-bottom: 1px solid #eaeaea;
   transition: color 0.2s ease;
 }
 
 .megamenu-container .submenu .column .menu li a:hover {
   color: #0073aa;
+}
+
+/* Column titles */
+.megamenu-container .submenu .column .column-title {
+  margin: 0 0 15px 0;
+  padding: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.megamenu-container .submenu .column .column-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: #006633;
+}
+
+/* Ensure featured image column is not affected by layout styles */
+.megamenu-container .submenu .featured-image-column {
+  flex: 0 0 250px;
+  margin-right: 20px;
+}
+
+.megamenu-container .submenu .featured-image-column .featured-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.megamenu-container .submenu .featured-image img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 /* Focus styles for accessibility */
@@ -211,6 +313,15 @@
 }
 
 /* Responsive adjustments */
+@media (max-width: 992px) {
+  /* Adjust column widths on tablet */
+  .megamenu-container .submenu .column,
+  .megamenu-container .submenu .featured-image-column {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
 @media (max-width: 768px) {
   /* Show mobile menu toggle */
   .mobile-menu-toggle {
@@ -258,12 +369,17 @@
     margin-bottom: 15px;
   }
   
-  .megamenu-container .submenu.mobile .column .menu {
+  .megamenu-container .submenu.mobile .column .menus-container {
+    display: block;
+    margin: 0;
+  }
+  
+  .megamenu-container .submenu.mobile .column .menus-container .menu {
     border-top: 1px solid #e2e2e2;
     margin-bottom: 10px;
   }
   
-  .megamenu-container .submenu.mobile .column .menu li a {
+  .megamenu-container .submenu.mobile .column .menus-container .menu li a {
     padding: 8px 15px;
   }
   
@@ -276,6 +392,20 @@
   
   .megamenu-container .submenu.mobile .featured-image img {
     max-height: 200px;
+  }
+  
+  /* Mobile adjustments for horizontal menus */
+  .megamenu-container .submenu .column .horizontal-menu {
+    flex: 1 0 100%;
+    max-width: 100%;
+    margin: 0 0 20px 0;
+  }
+  
+  /* Mobile container adjustments */
+  .megamenu-container .submenu.mobile .column .horizontal-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
   }
 }
 

@@ -236,9 +236,24 @@ class Megamenu_Settings {
                     }
                     
                     if (!empty($sanitized_menus)) {
-                        $sanitized_columns[] = array(
+                        $column_data = array(
                             'menus' => $sanitized_menus
                         );
+                        
+                        // Sanitize column title if present
+                        if (isset($column['title']) && !empty($column['title'])) {
+                            $column_data['title'] = sanitize_text_field($column['title']);
+                        }
+                        
+                        // Sanitize column style if present
+                        if (isset($column['style']) && !empty($column['style'])) {
+                            // Only allow valid style values
+                            if (in_array($column['style'], array('vertical', 'horizontal'))) {
+                                $column_data['style'] = sanitize_text_field($column['style']);
+                            }
+                        }
+                        
+                        $sanitized_columns[] = $column_data;
                     }
                 }
                 

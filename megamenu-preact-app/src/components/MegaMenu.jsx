@@ -162,6 +162,7 @@ class MegaMenu extends Component {
         {/* Render submenu outside the top menu as a sibling element */}
         {activeMenu !== null && data.subMenus[activeMenu] && (
           <div className="submenu-wrapper">
+            {console.log('MegaMenu - submenu data:', data.subMenus[activeMenu])}
             <SubMenu 
               columns={data.subMenus[activeMenu]} 
               isMobileView={isMobileView}

@@ -140,7 +140,11 @@ class Megamenu_Frontend {
                     }
                 }
                 
-                $column_data[] = array('menus' => $menus);
+                $column_data[] = array(
+                    'menus' => $menus,
+                    'title' => isset($column['title']) ? $column['title'] : '',
+                    'style' => isset($column['style']) ? $column['style'] : 'vertical'
+                );
             }
             
             $submenu_data[$top_item_id] = $column_data;

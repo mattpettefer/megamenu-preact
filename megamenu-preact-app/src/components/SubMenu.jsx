@@ -11,6 +11,9 @@ import { h } from 'preact';
  * @param {string} props.featuredImage - URL of the featured image for this submenu
  */
 const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
+  console.log('SubMenu - columns data:', columns);
+  console.log('SubMenu - Featured Image:', featuredImage);
+  
   if (!columns || !columns.length) {
     return null;
   }
@@ -31,19 +34,35 @@ const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
       )}
       
       {/* Menu columns */}
-      {columns.map((column, columnIndex) => (
-        <div key={columnIndex} className="column">
-          {column.menus && column.menus.map((menu) => (
-            <ul key={menu.id} className="menu" role="menu">
-              {menu.items && menu.items.map((item) => (
-                <li key={item.id} role="menuitem">
-                  <a href={item.url}>{item.title}</a>
-                </li>
+      {columns.map((column, columnIndex) => {
+        console.log(`SubMenu - Column ${columnIndex}:`, column);
+        
+        // Now we can use the style property that's passed from the PHP backend
+        const isHorizontal = column.style === 'horizontal';
+        
+        return (
+          <div key={columnIndex} className="column">
+            {/* Display column title if it exists */}
+            {column.title && <h4 className="column-title">{column.title}</h4>}
+            
+            <div className={`menus-container ${isHorizontal ? 'horizontal-container' : 'vertical-container'}`}>
+              {column.menus && column.menus.map((menu) => (
+                <ul 
+                  key={menu.id} 
+                  className={`menu ${isHorizontal ? 'horizontal-menu' : 'vertical-menu'}`} 
+                  role="menu"
+                >
+                  {menu.items && menu.items.map((item) => (
+                    <li key={item.id} role="menuitem">
+                      <a href={item.url}>{item.title}</a>
+                    </li>
+                  ))}
+                </ul>
               ))}
-            </ul>
-          ))}
-        </div>
-      ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

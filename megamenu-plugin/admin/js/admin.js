@@ -202,6 +202,8 @@
                 $(this).find('.submenu-column').each(function() {
                     const columnIndex = $(this).data('column-index');
                     const menus = [];
+                    const title = $(this).find('.column-title').val();
+                    const style = $(this).find('.column-style').val();
                     
                     $(this).find('select.menu-selector').each(function() {
                         const menuId = $(this).val();
@@ -211,9 +213,19 @@
                     });
                     
                     if (menus.length) {
-                        columns.push({
+                        const columnData = {
                             menus: menus
-                        });
+                        };
+                        
+                        if (title) {
+                            columnData.title = title;
+                        }
+                        
+                        if (style && style !== 'vertical') {
+                            columnData.style = style;
+                        }
+                        
+                        columns.push(columnData);
                     }
                 });
                 
@@ -373,6 +385,17 @@
                 <div class="submenu-column" data-column-index="${columnIndex}">
                     <h5>Column ${columnIndex + 1}</h5>
                     <a href="#" class="remove-column">Remove</a>
+                    <div class="column-title-field">
+                        <label for="column-title-${itemId}-${columnIndex}">Column Title</label>
+                        <input type="text" id="column-title-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][title]" class="column-title" placeholder="Enter column title (optional)">
+                    </div>
+                    <div class="column-style-field">
+                        <label for="column-style-${itemId}-${columnIndex}">Menu Layout</label>
+                        <select id="column-style-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][style]" class="column-style">
+                            <option value="vertical">Vertical (Default)</option>
+                            <option value="horizontal">Horizontal (2 per row)</option>
+                        </select>
+                    </div>
                     <div class="column-menus"></div>
                     <button type="button" class="button button-small add-menu" data-item-id="${itemId}" data-column-index="${columnIndex}">Add Menu</button>
                 </div>
@@ -532,6 +555,17 @@
                                 <div class="submenu-column" data-column-index="${columnIndex}">
                                     <h5>Column ${columnIndex + 1}</h5>
                                     <a href="#" class="remove-column">Remove</a>
+                                    <div class="column-title-field">
+                                        <label for="column-title-${itemId}-${columnIndex}">Column Title</label>
+                                        <input type="text" id="column-title-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][title]" class="column-title" placeholder="Enter column title (optional)" value="${column.title || ''}">
+                                    </div>
+                                    <div class="column-style-field">
+                                        <label for="column-style-${itemId}-${columnIndex}">Menu Layout</label>
+                                        <select id="column-style-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][style]" class="column-style">
+                                            <option value="vertical" ${(!column.style || column.style === 'vertical') ? 'selected' : ''}>Vertical (Default)</option>
+                                            <option value="horizontal" ${(column.style === 'horizontal') ? 'selected' : ''}>Horizontal (2 per row)</option>
+                                        </select>
+                                    </div>
                                     <div class="column-menus"></div>
                                     <button type="button" class="button button-small add-menu" data-item-id="${itemId}" data-column-index="${columnIndex}">Add Menu</button>
                                 </div>
