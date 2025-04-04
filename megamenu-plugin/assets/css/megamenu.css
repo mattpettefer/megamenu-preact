@@ -1,0 +1,102 @@
+/**
+ * Megamenu Styles
+ */
+
+/* Main container */
+#megamenu-container {
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Top menu */
+.megamenu {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.megamenu .top-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.megamenu .top-menu li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.megamenu .top-menu li a {
+    display: block;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.megamenu .top-menu li a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Submenu */
+.megamenu .submenu {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1001;
+}
+
+/* Columns */
+.megamenu .submenu .column {
+    flex: 1;
+    padding: 0 15px;
+    min-width: 200px;
+}
+
+/* Menus within columns */
+.megamenu .submenu .column ul {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.megamenu .submenu .column ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.megamenu .submenu .column ul li a {
+    display: block;
+    padding: 8px 0;
+    color: #333;
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.megamenu .submenu .column ul li a:hover {
+    color: #0073aa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .megamenu .submenu {
+        flex-direction: column;
+    }
+    
+    .megamenu .submenu .column {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 15px;
+    }
+}

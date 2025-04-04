@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megamenu Preact Development</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #333;
+        }
+    </style>
+    <script>
+        // Mock data for development
+        window.megamenuData = {
+            topMenu: {
+                id: 1,
+                items: [
+                    {id: 100, title: "Admissions", url: "#"},
+                    {id: 101, title: "Academics", url: "#"},
+                    {id: 102, title: "Campus Life", url: "#"},
+                    {id: 103, title: "Research", url: "#"},
+                    {id: 104, title: "Alumni", url: "#"},
+                    {id: 105, title: "About", url: "#"}
+                ]
+            },
+            subMenus: {
+                "100": [
+                    {
+                        menus: [
+                            {
+                                id: 1001,
+                                items: [
+                                    {id: 10011, title: "Apply Now", url: "#"},
+                                    {id: 10012, title: "Application Guide", url: "#"},
+                                    {id: 10013, title: "Deadlines", url: "#"}
+                                ]
+                            },
+                            {
+                                id: 1002,
+                                items: [
+                                    {id: 10021, title: "Campus Tours", url: "#"},
+                                    {id: 10022, title: "Virtual Tour", url: "#"},
+                                    {id: 10023, title: "Open House", url: "#"}
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        menus: [
+                            {
+                                id: 1003,
+                                items: [
+                                    {id: 10031, title: "Tuition Fees", url: "#"},
+                                    {id: 10032, title: "Financial Aid", url: "#"},
+                                    {id: 10033, title: "Scholarships", url: "#"}
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "101": [
+                    {
+                        menus: [
+                            {
+                                id: 1004,
+                                items: [
+                                    {id: 10041, title: "Undergraduate", url: "#"},
+                                    {id: 10042, title: "Graduate", url: "#"},
+                                    {id: 10043, title: "Professional", url: "#"}
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        menus: [
+                            {
+                                id: 1005,
+                                items: [
+                                    {id: 10051, title: "Colleges & Schools", url: "#"},
+                                    {id: 10052, title: "Departments", url: "#"},
+                                    {id: 10053, title: "Programs", url: "#"}
+                                ]
+                            },
+                            {
+                                id: 1006,
+                                items: [
+                                    {id: 10061, title: "Academic Calendar", url: "#"},
+                                    {id: 10062, title: "Course Catalog", url: "#"},
+                                    {id: 10063, title: "Registration", url: "#"}
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Megamenu Preact Development</h1>
+        <div id="megamenu-container"></div>
+    </div>
+</body>
+</html>
