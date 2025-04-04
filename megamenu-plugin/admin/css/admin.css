@@ -1,0 +1,260 @@
+/**
+ * Megamenu Admin Styles
+ */
+
+/* Tabs Container */
+.megamenu-tabs-container {
+    margin-top: 20px;
+}
+
+/* Tab Navigation */
+.megamenu-tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.megamenu-tab-button {
+    padding: 10px 15px;
+    margin-right: 5px;
+    margin-bottom: -1px;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.megamenu-tab-button:hover {
+    background: #f9f9f9;
+}
+
+.megamenu-tab-button.active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #0073aa;
+}
+
+/* Tab Content */
+.megamenu-tab-content {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0 3px 3px 3px;
+    padding: 20px;
+}
+
+.megamenu-tab-panel {
+    display: none;
+}
+
+.megamenu-tab-panel.active {
+    display: block;
+}
+
+/* Import/Export section */
+.megamenu-import-export {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    display: flex;
+    gap: 10px;
+}
+
+.megamenu-import-export .button {
+    padding: 5px 15px;
+}
+
+.megamenu-import-export .export-config {
+    background-color: #f0f5fa;
+    border-color: #0071a1;
+}
+
+.megamenu-import-export .export-config:hover {
+    background-color: #e6f0f8;
+    border-color: #005d8c;
+}
+
+.megamenu-import-export .import-config {
+    background-color: #f7fcf7;
+    border-color: #007017;
+}
+
+.megamenu-import-export .import-config:hover {
+    background-color: #eef9ee;
+    border-color: #005a12;
+}
+
+/* Submenu Item */
+.submenu-item {
+    padding: 15px 0;
+}
+
+/* Image Selector */
+.submenu-image-selector {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.submenu-image-selector h5 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.image-preview-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    border: 1px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.image-preview .remove-image {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #dc3232;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 18px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Submenu Columns */
+.submenu-columns-container {
+    margin-top: 20px;
+}
+
+.submenu-columns-container h5 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.submenu-columns {
+    margin-bottom: 15px;
+}
+
+.submenu-column {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    position: relative;
+}
+
+.submenu-column h5 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.submenu-column .remove-column {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #dc3232;
+    text-decoration: none;
+}
+
+.column-menus {
+    margin-bottom: 15px;
+}
+
+.column-menu {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.column-menu select {
+    flex: 1;
+}
+
+.column-menu .remove-menu {
+    color: #dc3232;
+    text-decoration: none;
+}
+
+/* Buttons */
+.button-small {
+    padding: 2px 8px;
+    font-size: 11px;
+    height: auto;
+    line-height: 20px;
+}
+
+/* Loading and Error Messages */
+.loading {
+    color: #666;
+    font-style: italic;
+}
+
+.error {
+    color: #dc3232;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 782px) {
+    .megamenu-tab-nav {
+        flex-direction: column;
+        border-bottom: none;
+    }
+    
+    .megamenu-tab-button {
+        margin-right: 0;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    .megamenu-tab-button.active {
+        border-bottom: 1px solid #0073aa;
+    }
+    
+    .megamenu-tab-content {
+        border-radius: 3px;
+    }
+    
+    .image-preview-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .column-menu {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .column-menu select {
+        width: 100%;
+    }
+}

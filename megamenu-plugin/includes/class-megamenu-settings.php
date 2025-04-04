@@ -66,6 +66,14 @@ class Megamenu_Settings {
         // Enqueue WordPress media scripts
         wp_enqueue_media();
         
+        // Enqueue admin CSS
+        wp_enqueue_style(
+            'megamenu-admin',
+            MEGAMENU_PREACT_URL . 'admin/css/admin.css',
+            array(),
+            MEGAMENU_PREACT_VERSION
+        );
+        
         wp_enqueue_script(
             'megamenu-admin',
             MEGAMENU_PREACT_URL . 'admin/js/admin.js',
