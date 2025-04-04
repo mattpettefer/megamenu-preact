@@ -77,6 +77,15 @@ class MegaMenu extends Component {
   };
   
   /**
+   * Handle mouse leave for the entire megamenu
+   */
+  handleMenuLeave = () => {
+    if (!this.state.isMobileView) {
+      this.setState({ activeMenu: null });
+    }
+  };
+  
+  /**
    * Handle click on top menu item for mobile view
    * @param {number} menuId - ID of the menu item being clicked
    * @param {Event} e - Click event
@@ -113,51 +122,54 @@ class MegaMenu extends Component {
     }
 
     return (
-      <nav className="megamenu" aria-label="Main Navigation">
-        {isMobileView && (
-          <button 
-            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
-            onClick={this.toggleMobileMenu}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            <span className="menu-icon"></span>
-            <span className="sr-only">Menu</span>
-          </button>
-        )}
-        
-        <ul className={`top-menu ${isMobileView && mobileMenuOpen ? 'mobile-open' : ''}`}>
-          {data.topMenu.items.map((item) => (
-            <li
-              key={item.id}
-              onMouseEnter={() => this.handleMouseEnter(item.id)}
-              onMouseLeave={this.handleMouseLeave}
-              className={activeMenu === item.id ? 'active' : ''}
+      <div className="megamenu-container" onMouseLeave={this.handleMenuLeave}>
+        <nav className="megamenu" aria-label="Main Navigation">
+          {isMobileView && (
+            <button 
+              className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+              onClick={this.toggleMobileMenu}
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle menu"
             >
-              <a 
-                href={item.url}
-                onClick={(e) => this.handleMenuClick(item.id, e)}
-                aria-expanded={activeMenu === item.id}
-                aria-haspopup={data.subMenus[item.id] ? 'true' : 'false'}
+              <span className="menu-icon"></span>
+              <span className="sr-only">Menu</span>
+            </button>
+          )}
+          
+          <ul className={`top-menu ${isMobileView && mobileMenuOpen ? 'mobile-open' : ''}`}>
+            {data.topMenu.items.map((item) => (
+              <li
+                key={item.id}
+                onMouseEnter={() => this.handleMouseEnter(item.id)}
+                className={activeMenu === item.id ? 'active' : ''}
               >
-                {item.title}
-                {data.subMenus[item.id] && isMobileView && (
-                  <span className="dropdown-indicator" aria-hidden="true"></span>
-                )}
-              </a>
-              
-              {/* Render submenu if this item is active and has submenu data */}
-              {activeMenu === item.id && data.subMenus[item.id] && (
-                <SubMenu 
-                  columns={data.subMenus[item.id]} 
-                  isMobileView={isMobileView}
-                  parentId={item.id}
-                />
-              )}
-            </li>
-          ))}
-        </ul>
-      </nav>
+                <a 
+                  href={item.url}
+                  onClick={(e) => this.handleMenuClick(item.id, e)}
+                  aria-expanded={activeMenu === item.id}
+                  aria-haspopup={data.subMenus[item.id] ? 'true' : 'false'}
+                >
+                  {item.title}
+                  {data.subMenus[item.id] && isMobileView && (
+                    <span className="dropdown-indicator" aria-hidden="true"></span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        
+        {/* Render submenu outside the top menu as a sibling element */}
+        {activeMenu !== null && data.subMenus[activeMenu] && (
+          <div className="submenu-wrapper">
+            <SubMenu 
+              columns={data.subMenus[activeMenu]} 
+              isMobileView={isMobileView}
+              parentId={activeMenu}
+            />
+          </div>
+        )}
+      </div>
     );
   }
 }
