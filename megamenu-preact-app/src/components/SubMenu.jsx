@@ -50,7 +50,7 @@ const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
                 <div key={menu.id} className="menu-container">
                   {menu.title && <h5 className="menu-title">{menu.title}</h5>}
                   <ul 
-                    className={`menu ${isHorizontal ? 'horizontal-menu' : 'vertical-menu'}`} 
+                    className="menu" 
                     role="menu"
                   >
                     {menu.items && menu.items.map((item) => (
