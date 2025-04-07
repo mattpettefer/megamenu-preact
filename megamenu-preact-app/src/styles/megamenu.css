@@ -250,6 +250,7 @@
 
 /* Horizontal menu */
 .megamenu-container .submenu .column .horizontal-menu {
+  display: flex;
   flex: 0 0 50%;
   margin: 0 0 15px 0;
   box-sizing: border-box;
