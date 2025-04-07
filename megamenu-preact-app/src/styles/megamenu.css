@@ -170,9 +170,9 @@
 
 /* Columns within submenu */
 .megamenu-container .submenu .column {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 200px;
-  max-width: 300px;
+  max-width: none;
   margin-right: 0;
   padding: 0;
   box-sizing: border-box;
@@ -219,7 +219,7 @@
   right: 0;
 }
 
-/* Menus containers */
+/* Menus container */
 .megamenu-container .submenu .column .menus-container {
   width: 100%;
   box-sizing: border-box;
@@ -237,16 +237,16 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-around;
   margin: 0 -10px;
 }
 
 /* Menu container within horizontal container */
 .megamenu-container .submenu .column .horizontal-container .menu-container {
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   padding: 0 10px;
   box-sizing: border-box;
   margin-bottom: 10px;
-  width: 50%;
 }
 
 /* Menu container within vertical container */
@@ -279,11 +279,6 @@
 
 .megamenu-container .submenu .column .menu li a:hover {
   color: #0073aa;
-}
-
-/* Menu container */
-.megamenu-container .submenu .column .menu-container {
-  margin-bottom: 15px;
 }
 
 /* Menu titles */
@@ -421,12 +416,6 @@
   
   .megamenu-container .submenu.mobile .featured-image img {
     max-height: 200px;
-  }
-  
-  /* Mobile adjustments for horizontal menus */
-  .megamenu-container .submenu .column .horizontal-menu {
-    flex: 1 0 100%;
-    margin: 0 0 20px 0;
   }
   
   /* Mobile container adjustments */
