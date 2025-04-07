@@ -157,28 +157,36 @@
 .megamenu-container .submenu {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: space-around;
   width: 100%;
   max-width: 100%;
   background-color: #fff;
   position: absolute;
   z-index: 100;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  padding: 20px 0;
+  padding: 20px 30px;
   border-radius: 0 0 4px 4px;
 }
 
 /* Columns within submenu */
 .megamenu-container .submenu .column {
   flex: 1 1 auto;
-  min-width: 0;
-  padding: 0 15px;
+  min-width: 200px;
+  max-width: none;
+  margin-right: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+.megamenu-container .submenu .column:last-child {
+  margin-right: 0;
 }
 
 /* Featured image column */
 .megamenu-container .submenu .featured-image-column {
   flex: 0 0 250px;
-  padding: 10px 15px 0;
+  padding: 0;
+  margin-right: 0;
   align-self: flex-start;
   display: flex;
   flex-direction: column;
@@ -211,7 +219,7 @@
   right: 0;
 }
 
-/* Menus containers */
+/* Menus container */
 .megamenu-container .submenu .column .menus-container {
   width: 100%;
   box-sizing: border-box;
@@ -229,30 +237,29 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 0 -5px;
+  justify-content: space-around;
+  margin: 0 -10px;
 }
 
-/* Vertical menu (default) */
-.megamenu-container .submenu .column .vertical-menu {
-  display: block;
+/* Menu container within horizontal container */
+.megamenu-container .submenu .column .horizontal-container .menu-container {
+  flex: 0 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Menu container within vertical container */
+.megamenu-container .submenu .column .vertical-container .menu-container {
   width: 100%;
-  margin: 0 0 20px 0;
-  box-sizing: border-box;
-}
-
-/* Horizontal menu */
-.megamenu-container .submenu .column .horizontal-menu {
-  flex: 0 0 50%;
-  margin: 0 0 15px 0;
-  box-sizing: border-box;
-  min-width: 0;
-  padding: 0 5px;
+  margin-bottom: 20px;
 }
 
 /* Menus within columns */
 .megamenu-container .submenu .column .menus-container .menu {
   list-style: none;
   padding: 0;
+  margin: 0 0 15px 0;
 }
 
 /* Menu items */
@@ -272,11 +279,6 @@
 
 .megamenu-container .submenu .column .menu li a:hover {
   color: #0073aa;
-}
-
-/* Menu container */
-.megamenu-container .submenu .column .menu-container {
-  margin-bottom: 15px;
 }
 
 /* Menu titles */
@@ -311,7 +313,7 @@
 /* Ensure featured image column is not affected by layout styles */
 .megamenu-container .submenu .featured-image-column {
   flex: 0 0 250px;
-  margin-right: 20px;
+  margin-right: 0;
 }
 
 .megamenu-container .submenu .featured-image-column .featured-image {
@@ -414,12 +416,6 @@
   
   .megamenu-container .submenu.mobile .featured-image img {
     max-height: 200px;
-  }
-  
-  /* Mobile adjustments for horizontal menus */
-  .megamenu-container .submenu .column .horizontal-menu {
-    flex: 1 0 100%;
-    margin: 0 0 20px 0;
   }
   
   /* Mobile container adjustments */
