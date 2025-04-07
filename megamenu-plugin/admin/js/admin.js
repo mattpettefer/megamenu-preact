@@ -443,7 +443,6 @@
                     $menusContainer.find('.loading').remove();
                     
                     if (response.success) {
-                        // Render menu selector
                         renderMenuSelector($menusContainer, response.data.menus, itemId, columnIndex);
                     } else {
                         $menusContainer.append('<p class="error">Error: ' + response.data.message + '</p>');
@@ -468,13 +467,23 @@
             const menuSelectorId = `menu-selector-${itemId}-${columnIndex}-${menuIndex}`;
             const menuTitleId = `menu-title-${itemId}-${columnIndex}-${menuIndex}`;
             
+            // Get the last selected menu index from localStorage if available
+            const lastSelectedMenuIndex = parseInt(localStorage.getItem('megamenu_last_selected_menu_index') || '-1');
+            
+            // Determine the next menu index to use
+            let nextMenuIndex = (lastSelectedMenuIndex + 1) % menus.length;
+            if (nextMenuIndex < 0) nextMenuIndex = 0;
+            
+            // Store the new index
+            localStorage.setItem('megamenu_last_selected_menu_index', nextMenuIndex.toString());
+            
             // Create the menu selector
             const $menuSelector = $(`
                 <div class="column-menu">
                     <div class="menu-selector-container">
                         <select id="${menuSelectorId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][${menuIndex}][id]" class="menu-selector">
                             <option value="">Select a menu</option>
-                            ${menus.map(menu => `<option value="${menu.term_id}">${menu.name}</option>`).join('')}
+                            ${menus.map((menu, index) => `<option value="${menu.term_id}" ${(index === nextMenuIndex) ? 'selected' : ''}>${menu.name}</option>`).join('')}
                         </select>
                         <a href="#" class="remove-menu">Remove</a>
                     </div>
