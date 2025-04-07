@@ -395,8 +395,8 @@
                     <div class="column-style-field">
                         <label for="column-style-${itemId}-${columnIndex}">Menu Layout</label>
                         <select id="column-style-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][style]" class="column-style">
-                            <option value="vertical">Vertical (Default)</option>
-                            <option value="horizontal">Horizontal (2 per row)</option>
+                            <option value="vertical">Vertical</option>
+                            <option value="horizontal">Horizontal</option>
                         </select>
                     </div>
                     <div class="column-menus"></div>
@@ -573,8 +573,8 @@
                                     <div class="column-style-field">
                                         <label for="column-style-${itemId}-${columnIndex}">Menu Layout</label>
                                         <select id="column-style-${itemId}-${columnIndex}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][style]" class="column-style">
-                                            <option value="vertical" ${(!column.style || column.style === 'vertical') ? 'selected' : ''}>Vertical (Default)</option>
-                                            <option value="horizontal" ${(column.style === 'horizontal') ? 'selected' : ''}>Horizontal (2 per row)</option>
+                                            <option value="vertical" ${(!column.style || column.style === 'vertical') ? 'selected' : ''}>Vertical</option>
+                                            <option value="horizontal" ${(column.style === 'horizontal') ? 'selected' : ''}>Horizontal</option>
                                         </select>
                                     </div>
                                     <div class="column-menus"></div>
