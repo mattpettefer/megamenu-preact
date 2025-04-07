@@ -47,17 +47,19 @@ const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
             
             <div className={`menus-container ${isHorizontal ? 'horizontal-container' : 'vertical-container'}`}>
               {column.menus && column.menus.map((menu) => (
-                <ul 
-                  key={menu.id} 
-                  className={`menu ${isHorizontal ? 'horizontal-menu' : 'vertical-menu'}`} 
-                  role="menu"
-                >
-                  {menu.items && menu.items.map((item) => (
-                    <li key={item.id} role="menuitem">
-                      <a href={item.url}>{item.title}</a>
-                    </li>
-                  ))}
-                </ul>
+                <div key={menu.id} className="menu-container">
+                  {menu.title && <h5 className="menu-title">{menu.title}</h5>}
+                  <ul 
+                    className={`menu ${isHorizontal ? 'horizontal-menu' : 'vertical-menu'}`} 
+                    role="menu"
+                  >
+                    {menu.items && menu.items.map((item) => (
+                      <li key={item.id} role="menuitem">
+                        <a href={item.url}>{item.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>

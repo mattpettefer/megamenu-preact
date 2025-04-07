@@ -119,7 +119,18 @@ class Megamenu_Frontend {
             foreach ($columns as $column) {
                 $menus = array();
                 
-                foreach ($column['menus'] as $menu_id) {
+                foreach ($column['menus'] as $menu_entry) {
+                    // Handle both old format (menu ID as integer) and new format (menu as array with ID and title)
+                    if (is_array($menu_entry) && isset($menu_entry['id'])) {
+                        // New format with ID and title
+                        $menu_id = absint($menu_entry['id']);
+                        $menu_title = isset($menu_entry['title']) ? $menu_entry['title'] : '';
+                    } else {
+                        // Old format (just the ID)
+                        $menu_id = absint($menu_entry);
+                        $menu_title = '';
+                    }
+                    
                     $menu_items = wp_get_nav_menu_items($menu_id);
                     
                     if ($menu_items) {
@@ -135,6 +146,7 @@ class Megamenu_Frontend {
                         
                         $menus[] = array(
                             'id' => $menu_id,
+                            'title' => $menu_title,
                             'items' => $menu_item_data
                         );
                     }

@@ -191,6 +191,17 @@ class Megamenu_Settings {
      * Sanitize settings
      */
     public function sanitize_settings($input) {
+        // Debug: Log the input data to see what's being received
+        error_log('Megamenu sanitize_settings input: ' . print_r($input, true));
+        
+        // Debug specific item
+        if (isset($input['submenu_columns']) && !empty($input['submenu_columns'])) {
+            foreach ($input['submenu_columns'] as $item_id => $columns) {
+                error_log("Checking submenu columns for item ID: $item_id");
+                error_log("Column data: " . print_r($columns, true));
+            }
+        }
+        
         $sanitized = array();
         
         // Sanitize top menu
@@ -200,12 +211,24 @@ class Megamenu_Settings {
             $sanitized['top_menu'] = '';
         }
         
+        // Get current menu items to validate against
+        $current_menu_items = array();
+        if (!empty($sanitized['top_menu'])) {
+            $menu_items = wp_get_nav_menu_items($sanitized['top_menu']);
+            if ($menu_items && !is_wp_error($menu_items)) {
+                foreach ($menu_items as $item) {
+                    $current_menu_items[] = $item->ID;
+                }
+            }
+        }
+        
         // Sanitize submenu images
         if (isset($input['submenu_images']) && is_array($input['submenu_images'])) {
             $sanitized['submenu_images'] = array();
             
             foreach ($input['submenu_images'] as $item_id => $image_id) {
-                if (!empty($image_id)) {
+                // Only keep images for menu items that still exist
+                if (!empty($image_id) && (empty($current_menu_items) || in_array($item_id, $current_menu_items))) {
                     $sanitized['submenu_images'][$item_id] = absint($image_id);
                 }
             }
@@ -218,6 +241,11 @@ class Megamenu_Settings {
             $sanitized['submenu_columns'] = array();
             
             foreach ($input['submenu_columns'] as $top_item_id => $columns) {
+                // Skip if this menu item no longer exists in the top menu
+                if (!empty($current_menu_items) && !in_array($top_item_id, $current_menu_items)) {
+                    continue;
+                }
+                
                 if (!is_array($columns)) {
                     continue;
                 }
@@ -229,10 +257,38 @@ class Megamenu_Settings {
                         continue;
                     }
                     
+                    // Sanitize menus
                     $sanitized_menus = array();
                     
-                    foreach ($column['menus'] as $menu_id) {
-                        $sanitized_menus[] = absint($menu_id);
+                    if (isset($column['menus']) && is_array($column['menus'])) {
+                        foreach ($column['menus'] as $menu_data) {
+                            // Handle the new format where each menu is an array with id and title keys
+                            if (is_array($menu_data) && isset($menu_data['id'])) {
+                                $menu_id = absint($menu_data['id']);
+                                if (!empty($menu_id)) {
+                                    $menu_item = array(
+                                        'id' => $menu_id
+                                    );
+                                    
+                                    // Add title if present
+                                    if (isset($menu_data['title'])) {
+                                        $menu_item['title'] = sanitize_text_field($menu_data['title']);
+                                    }
+                                    
+                                    $sanitized_menus[] = $menu_item;
+                                }
+                            }
+                            // Handle legacy numeric menu IDs (for backwards compatibility)
+                            else if (is_numeric($menu_data)) {
+                                $menu_id = absint($menu_data);
+                                if (!empty($menu_id)) {
+                                    $sanitized_menus[] = array(
+                                        'id' => $menu_id,
+                                        'title' => ''
+                                    );
+                                }
+                            }
+                        }
                     }
                     
                     if (!empty($sanitized_menus)) {

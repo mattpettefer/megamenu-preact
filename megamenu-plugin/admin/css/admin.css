@@ -193,6 +193,11 @@
     align-items: center;
     margin-bottom: 10px;
     gap: 10px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 3px;
 }
 
 .column-menu select {
@@ -202,6 +207,34 @@
 .column-menu .remove-menu {
     color: #dc3232;
     text-decoration: none;
+}
+
+.menu-selector-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.menu-selector-container .menu-selector {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.menu-title-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-title-field label {
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #666;
+}
+
+.menu-title-field input {
+    width: 100%;
 }
 
 /* Column title field */

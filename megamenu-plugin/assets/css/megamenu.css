@@ -101,6 +101,7 @@
   position: relative;
   margin: 0;
   padding: 0;
+  flex: 1 0 auto;
 }
 
 .megamenu .top-menu li a {
@@ -271,6 +272,20 @@
 
 .megamenu-container .submenu .column .menu li a:hover {
   color: #0073aa;
+}
+
+/* Menu container */
+.megamenu-container .submenu .column .menu-container {
+  margin-bottom: 15px;
+}
+
+/* Menu titles */
+.megamenu-container .submenu .column .menu-title {
+  margin: 0 0 8px 0;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
 }
 
 /* Column titles */

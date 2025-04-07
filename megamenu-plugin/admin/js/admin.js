@@ -145,7 +145,10 @@
             $submenuConfig.html(html);
             
             // Attach tab click handlers
-            $('.megamenu-tab-button').on('click', function() {
+            $('.megamenu-tab-button').on('click', function(e) {
+                // Prevent default action (page reload)
+                e.preventDefault();
+                
                 const tabId = $(this).data('tab');
                 
                 // Update active tab button
@@ -461,16 +464,24 @@
         // Render menu selector
         function renderMenuSelector($container, menus, itemId, columnIndex) {
             // Create a unique ID for the menu selector
-            const menuSelectorId = `menu-selector-${itemId}-${columnIndex}-${$container.find('.column-menu').length}`;
+            const menuIndex = $container.find('.column-menu').length;
+            const menuSelectorId = `menu-selector-${itemId}-${columnIndex}-${menuIndex}`;
+            const menuTitleId = `menu-title-${itemId}-${columnIndex}-${menuIndex}`;
             
             // Create the menu selector
             const $menuSelector = $(`
                 <div class="column-menu">
-                    <select id="${menuSelectorId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][]" class="menu-selector">
-                        <option value="">Select a menu</option>
-                        ${menus.map(menu => `<option value="${menu.term_id}">${menu.name}</option>`).join('')}
-                    </select>
-                    <a href="#" class="remove-menu">Remove</a>
+                    <div class="menu-selector-container">
+                        <select id="${menuSelectorId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][${menuIndex}][id]" class="menu-selector">
+                            <option value="">Select a menu</option>
+                            ${menus.map(menu => `<option value="${menu.term_id}">${menu.name}</option>`).join('')}
+                        </select>
+                        <a href="#" class="remove-menu">Remove</a>
+                    </div>
+                    <div class="menu-title-field">
+                        <label for="${menuTitleId}">Menu Title (optional)</label>
+                        <input type="text" id="${menuTitleId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][${menuIndex}][title]" class="menu-title" placeholder="Enter menu title">
+                    </div>
                 </div>
             `);
             
@@ -595,18 +606,35 @@
                                         
                                         // Add menu selectors for each menu in the column
                                         if (column.menus && column.menus.length) {
-                                            column.menus.forEach(function(menuId) {
+                                            column.menus.forEach(function(menuEntry, menuIndex) {
+                                                // Handle both old format (just ID) and new format (object with ID and title)
+                                                let menuId, menuTitle = '';
+                                                
+                                                if (typeof menuEntry === 'object' && menuEntry !== null) {
+                                                    menuId = menuEntry.id;
+                                                    menuTitle = menuEntry.title || '';
+                                                } else {
+                                                    menuId = menuEntry;
+                                                }
+                                                
                                                 // Create a unique ID for the menu selector
-                                                const menuSelectorId = `menu-selector-${itemId}-${columnIndex}-${$menusContainer.find('.column-menu').length}`;
+                                                const menuSelectorId = `menu-selector-${itemId}-${columnIndex}-${menuIndex}`;
+                                                const menuTitleId = `menu-title-${itemId}-${columnIndex}-${menuIndex}`;
                                                 
                                                 // Create the menu selector
                                                 const $menuSelector = $(`
                                                     <div class="column-menu">
-                                                        <select id="${menuSelectorId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][]" class="menu-selector">
-                                                            <option value="">Select a menu</option>
-                                                            ${menus.map(menu => `<option value="${menu.term_id}" ${menu.term_id == menuId ? 'selected' : ''}>${menu.name}</option>`).join('')}
-                                                        </select>
-                                                        <a href="#" class="remove-menu">Remove</a>
+                                                        <div class="menu-selector-container">
+                                                            <select id="${menuSelectorId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][${menuIndex}][id]" class="menu-selector">
+                                                                <option value="">Select a menu</option>
+                                                                ${menus.map(menu => `<option value="${menu.term_id}" ${menu.term_id == menuId ? 'selected' : ''}>${menu.name}</option>`).join('')}
+                                                            </select>
+                                                            <a href="#" class="remove-menu">Remove</a>
+                                                        </div>
+                                                        <div class="menu-title-field">
+                                                            <label for="${menuTitleId}">Menu Title (optional)</label>
+                                                            <input type="text" id="${menuTitleId}" name="megamenu_config[submenu_columns][${itemId}][${columnIndex}][menus][${menuIndex}][title]" class="menu-title" placeholder="Enter menu title" value="${menuTitle}">
+                                                        </div>
                                                     </div>
                                                 `);
                                                 
