@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import MegaMenu from './MegaMenu';
+import TopBarDesktop from './TopBarDesktop';
 
 /**
  * Header Component
@@ -63,22 +64,16 @@ class Header extends Component {
     }));
   };
 
-  render() {
+  renderMobileHeader() {
     const { data } = this.props;
-    const { isMobileView, mobileMenuOpen } = this.state;
+    const { mobileMenuOpen } = this.state;
     
-    // If no data is provided, don't render anything
-    if (!data) {
-      return null;
-    }
-
     return (
-      <header className="site-header">
+      <header className="site-header mobile">
         <div className="header-container">
           {/* Logo area */}
           <div className="logo-container">
             <a href="/" className="site-logo">
-              {/* If there's a logo in the data, use it, otherwise use a text fallback */}
               {data.logo ? (
                 <img src={data.logo} alt={data.siteTitle || 'Site Logo'} />
               ) : (
@@ -88,28 +83,59 @@ class Header extends Component {
           </div>
           
           {/* Mobile menu toggle button */}
-          {isMobileView && (
-            <button 
-              className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
-              onClick={this.toggleMobileMenu}
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle menu"
-            >
-              <span className="menu-icon"></span>
-              <span className="sr-only">Menu</span>
-            </button>
-          )}
+          <button 
+            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+            onClick={this.toggleMobileMenu}
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle menu"
+          >
+            <span className="menu-icon"></span>
+            <span className="sr-only">Menu</span>
+          </button>
           
-          {/* MegaMenu component */}
+          {/* MegaMenu component for mobile */}
           <MegaMenu 
             data={data} 
-            isMobileView={isMobileView} 
+            isMobileView={true} 
             mobileMenuOpen={mobileMenuOpen}
             onMenuClose={() => this.setState({ mobileMenuOpen: false })}
           />
         </div>
       </header>
     );
+  }
+  
+  renderDesktopHeader() {
+    const { data } = this.props;
+    
+    return (
+      <header className="site-header desktop">
+        <div className="header-container">
+          <TopBarDesktop data={data} />
+          <MegaMenu 
+            data={data} 
+            isMobileView={false}
+            mobileMenuOpen={false}
+            onMenuClose={() => {}}
+          />
+        </div>
+      </header>
+    );
+  }
+  
+  render() {
+    const { data } = this.props;
+    const { isMobileView } = this.state;
+    
+    // If no data is provided, don't render anything
+    if (!data) {
+      return null;
+    }
+
+    // Render different layouts based on viewport size
+    return isMobileView 
+      ? this.renderMobileHeader()
+      : this.renderDesktopHeader();
   }
 }
 
