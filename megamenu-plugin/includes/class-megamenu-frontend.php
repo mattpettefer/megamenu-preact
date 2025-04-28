@@ -62,6 +62,8 @@ class Megamenu_Frontend {
     public function add_megamenu_data() {
         // Get configuration
         $config = get_option('megamenu_config', array(
+            'dashboard_menu' => '',
+            'small_menu' => '',
             'top_menu' => '',
             'submenu_columns' => array(),
             'submenu_images' => array()
@@ -175,13 +177,51 @@ class Megamenu_Frontend {
             }
         }
         
+        // Prepare dashboard menu data
+        $dashboard_menu_data = array();
+        if (!empty($config['dashboard_menu'])) {
+            $dashboard_menu_items = wp_get_nav_menu_items($config['dashboard_menu']);
+            if ($dashboard_menu_items) {
+                foreach ($dashboard_menu_items as $item) {
+                    $dashboard_menu_data[] = array(
+                        'id' => $item->ID,
+                        'title' => $item->title,
+                        'url' => $item->url
+                    );
+                }
+            }
+        }
+
+        // Prepare small menu data
+        $small_menu_data = array();
+        if (!empty($config['small_menu'])) {
+            $small_menu_items = wp_get_nav_menu_items($config['small_menu']);
+            if ($small_menu_items) {
+                foreach ($small_menu_items as $item) {
+                    $small_menu_data[] = array(
+                        'id' => $item->ID,
+                        'title' => $item->title,
+                        'url' => $item->url
+                    );
+                }
+            }
+        }
+
         return array(
             'topMenu' => array(
                 'id' => $config['top_menu'],
                 'items' => $top_menu_data
             ),
             'subMenus' => $submenu_data,
-            'submenuImages' => $submenu_images
+            'submenuImages' => $submenu_images,
+            'dashboards' => array(
+                'id' => $config['dashboard_menu'],
+                'items' => $dashboard_menu_data
+            ),
+            'smallMenu' => array(
+                'id' => $config['small_menu'],
+                'items' => $small_menu_data
+            )
         );
     }
 }

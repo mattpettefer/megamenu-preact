@@ -88,14 +88,88 @@ class Megamenu_Settings {
             'submenu_columns' => array(),
             'submenu_images' => array()
         ));
-        
+
+        // Ensure config is complete for all menu items
+        $config = $this->get_complete_megamenu_config($config);
+
         wp_localize_script('megamenu-admin', 'megamenuAdmin', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('megamenu-admin-nonce')
         ));
-        
+
         // Pass the current configuration to JavaScript
         wp_localize_script('megamenu-admin', 'megamenuConfig', $config);
+    }
+
+    /**
+     * Ensure megamenu config includes all menu items with default columns/images
+     */
+    private function get_complete_megamenu_config($config) {
+        $top_menu_id = isset($config['top_menu']) ? absint($config['top_menu']) : 0;
+        $menu_items = $top_menu_id ? wp_get_nav_menu_items($top_menu_id) : array();
+
+        // Ensure keys exist
+        $config['submenu_columns'] = isset($config['submenu_columns']) && is_array($config['submenu_columns']) ? $config['submenu_columns'] : array();
+        $config['submenu_images'] = isset($config['submenu_images']) && is_array($config['submenu_images']) ? $config['submenu_images'] : array();
+
+        // Build tree for all menu items (parent/child structure)
+        $tree = $this->build_menu_tree($menu_items);
+
+        // Recursively walk tree and ensure config for every item (all levels)
+        $this->walk_menu_tree_and_fill_config($tree, $config);
+
+        return $config;
+    }
+
+    /**
+     * Build a tree structure from flat menu items array
+     */
+    private function build_menu_tree($menu_items) {
+        $tree = array();
+        $lookup = array();
+        foreach ($menu_items as $item) {
+            $item->children = array();
+            $lookup[$item->ID] = $item;
+        }
+        foreach ($menu_items as $item) {
+            if ($item->menu_item_parent && isset($lookup[$item->menu_item_parent])) {
+                $lookup[$item->menu_item_parent]->children[] = $item;
+            } else {
+                $tree[] = $item;
+            }
+        }
+        return $tree;
+    }
+
+    /**
+     * Recursively walk tree and ensure config for every menu item
+     */
+    private function walk_menu_tree_and_fill_config($items, &$config) {
+        foreach ($items as $item) {
+            $item_id = $item->ID;
+            if (
+                !isset($config['submenu_columns'][$item_id]) ||
+                !is_array($config['submenu_columns'][$item_id]) ||
+                count($config['submenu_columns'][$item_id]) === 0
+            ) {
+                // Only fill default if nothing meaningful exists
+                $config['submenu_columns'][$item_id] = array(
+                    array(
+                        'title' => '',
+                        'style' => 'vertical',
+                        'menus' => array()
+                    )
+                );
+            }
+            // Otherwise, leave the existing config as-is
+            if (!isset($config['submenu_images'][$item_id])) {
+                $config['submenu_images'][$item_id] = '';
+            }
+            // Recurse for children
+            if (!empty($item->children)) {
+                $this->walk_menu_tree_and_fill_config($item->children, $config);
+            }
+        }
     }
     
     /**
@@ -209,6 +283,20 @@ class Megamenu_Settings {
             $sanitized['top_menu'] = absint($input['top_menu']);
         } else {
             $sanitized['top_menu'] = '';
+        }
+
+        // Sanitize dashboard menu
+        if (isset($input['dashboard_menu'])) {
+            $sanitized['dashboard_menu'] = absint($input['dashboard_menu']);
+        } else {
+            $sanitized['dashboard_menu'] = '';
+        }
+
+        // Sanitize small menu
+        if (isset($input['small_menu'])) {
+            $sanitized['small_menu'] = absint($input['small_menu']);
+        } else {
+            $sanitized['small_menu'] = '';
         }
         
         // Get current menu items to validate against
@@ -333,6 +421,8 @@ class Megamenu_Settings {
         
         // Get current configuration
         $config = get_option('megamenu_config', array(
+            'dashboard_menu' => '',
+            'small_menu' => '',
             'top_menu' => '',
             'submenu_columns' => array(),
             'submenu_images' => array()
@@ -346,6 +436,28 @@ class Megamenu_Settings {
                 <?php settings_fields('megamenu_settings'); ?>
                 
                 <table class="form-table">
+                    <tr valign="top">
+                        <th scope="row"><label for="dashboard_menu"><?php esc_html_e('Dashboard Menu', 'megamenu-preact'); ?></label></th>
+                        <td>
+                            <select id="dashboard_menu" name="megamenu_config[dashboard_menu]">
+                                <option value=""><?php esc_html_e('Select a menu', 'megamenu-preact'); ?></option>
+                                <?php foreach ($menus as $menu) : ?>
+                                    <option value="<?php echo esc_attr($menu->term_id); ?>" <?php selected($config['dashboard_menu'], $menu->term_id); ?>><?php echo esc_html($menu->name); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><label for="small_menu"><?php esc_html_e('Small Menu', 'megamenu-preact'); ?></label></th>
+                        <td>
+                            <select id="small_menu" name="megamenu_config[small_menu]">
+                                <option value=""><?php esc_html_e('Select a menu', 'megamenu-preact'); ?></option>
+                                <?php foreach ($menus as $menu) : ?>
+                                    <option value="<?php echo esc_attr($menu->term_id); ?>" <?php selected($config['small_menu'], $menu->term_id); ?>><?php echo esc_html($menu->name); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row">
                             <label for="top_menu"><?php echo esc_html__('Select Top Menu', 'megamenu-preact'); ?></label>
@@ -364,8 +476,16 @@ class Megamenu_Settings {
                 </table>
                 
                 <div id="submenu-config">
-                    <!-- JavaScript will populate this area with submenu configuration options -->
-                    <p class="description"><?php echo esc_html__('Select a top menu to configure submenus', 'megamenu-preact'); ?></p>
+                <?php
+                    // Only render submenu config if a top menu is selected
+                    if (!empty($config['top_menu'])) {
+                        $menu_items = wp_get_nav_menu_items($config['top_menu']);
+                        require_once __DIR__ . '/render-megamenu-admin-html.php';
+                        render_megamenu_admin_html($menu_items, $config, $menus);
+                    } else {
+                        echo '<p class="description">' . esc_html__('Select a top menu to configure submenus', 'megamenu-preact') . '</p>';
+                    }
+                ?>
                 </div>
                 
                 <?php submit_button(); ?>

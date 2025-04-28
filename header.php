@@ -113,9 +113,7 @@ $be_ixf = new BEIXFClient($be_ixf_config);
 
   } else {
       if (is_front_page()) { $header_var = ' home'; } else { $header_var = ''; }?>
-  <header class="site-header2020 scrolled<?php echo $header_var; ?>">
 
     <div id="megamenu-container"></div>
 
-  </header>
 <?php } ?>
