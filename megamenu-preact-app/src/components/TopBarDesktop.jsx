@@ -60,7 +60,7 @@ class TopBarDesktop extends Component {
     return (
       <div className="top-bar-desktop">
         {/* Left side - Dashboards dropdown */}
-        <div className="dashboard-container" ref={ref => this.dashboardRef = ref}>
+        <div className="dashboard-menu-container" ref={ref => this.dashboardRef = ref}>
           <a 
             href="#" 
             className={`dashboard-toggle ${isDashboardOpen ? 'active' : ''}`}
