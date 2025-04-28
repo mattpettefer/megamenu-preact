@@ -30,7 +30,7 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  background-color: #333;
+  background-color: white;
   position: relative;
 }
 
@@ -95,6 +95,7 @@
   padding: 0;
   background-color: #ffffff;
   border-bottom: 1px solid #e2e2e2;
+  text-align: center;
 }
 
 .megamenu .top-menu li {
@@ -129,7 +130,8 @@
 
 .megamenu .top-menu li:hover a,
 .megamenu .top-menu li.active a {
-  background-color: transparent;
+  background-color: #333;
+  color: white;
 }
 
 .megamenu .top-menu li:hover a::after,
@@ -270,7 +272,7 @@
 
 .megamenu-container .submenu .column .menu li a {
   display: block;
-  padding: 8px 0;
+  padding: 0;
   color: #333;
   text-decoration: none;
   font-size: 14px;
