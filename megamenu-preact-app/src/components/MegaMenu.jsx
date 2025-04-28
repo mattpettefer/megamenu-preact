@@ -4,53 +4,29 @@ import SubMenu from './SubMenu';
 /**
  * MegaMenu Component
  * 
- * Main component for the megamenu that renders the top menu
- * and handles the display of submenus on hover and keyboard navigation
+ * Component for the navigation menu that handles the display of submenus
+ * on hover and keyboard navigation. Now works as a subcomponent of Header.
  */
 class MegaMenu extends Component {
   state = { 
-    activeMenu: null,
-    isMobileView: false,
-    mobileMenuOpen: false
+    activeMenu: null
   };
 
   componentDidMount() {
-    // Check if mobile view on mount
-    this.checkMobileView();
-    
-    // Add resize listener for responsive behavior
-    window.addEventListener('resize', this.checkMobileView);
-    
-    // Add escape key listener for accessibility
+    // Add escape key listener for accessibility specifically for submenu navigation
     document.addEventListener('keydown', this.handleKeyDown);
   }
   
   componentWillUnmount() {
     // Clean up event listeners
-    window.removeEventListener('resize', this.checkMobileView);
     document.removeEventListener('keydown', this.handleKeyDown);
   }
-  
-  /**
-   * Check if the current view is mobile
-   */
-  checkMobileView = () => {
-    const isMobileView = window.innerWidth <= 768;
-    if (isMobileView !== this.state.isMobileView) {
-      this.setState({ 
-        isMobileView,
-        // Close mobile menu when switching views
-        mobileMenuOpen: false,
-        activeMenu: null
-      });
-    }
-  };
 
   /**
    * Handle keyboard navigation
    */
   handleKeyDown = (e) => {
-    // Close menu on escape key
+    // Close submenu on escape key
     if (e.key === 'Escape' && this.state.activeMenu !== null) {
       this.setState({ activeMenu: null });
       e.preventDefault();
@@ -62,17 +38,9 @@ class MegaMenu extends Component {
    * @param {number} menuId - ID of the menu item being hovered
    */
   handleMouseEnter = (menuId) => {
-    if (!this.state.isMobileView) {
+    const { isMobileView } = this.props;
+    if (!isMobileView) {
       this.setState({ activeMenu: menuId });
-    }
-  };
-
-  /**
-   * Handle mouse leave on top menu item
-   */
-  handleMouseLeave = () => {
-    if (!this.state.isMobileView) {
-      this.setState({ activeMenu: null });
     }
   };
   
@@ -80,7 +48,8 @@ class MegaMenu extends Component {
    * Handle mouse leave for the entire megamenu
    */
   handleMenuLeave = () => {
-    if (!this.state.isMobileView) {
+    const { isMobileView } = this.props;
+    if (!isMobileView) {
       this.setState({ activeMenu: null });
     }
   };
@@ -91,9 +60,11 @@ class MegaMenu extends Component {
    * @param {Event} e - Click event
    */
   handleMenuClick = (menuId, e) => {
-    if (this.state.isMobileView) {
+    const { isMobileView, data } = this.props;
+    
+    if (isMobileView) {
       // If submenu exists, prevent default and toggle submenu
-      if (this.props.data.subMenus[menuId]) {
+      if (data.subMenus[menuId]) {
         e.preventDefault();
         this.setState(prevState => ({
           activeMenu: prevState.activeMenu === menuId ? null : menuId
@@ -101,41 +72,25 @@ class MegaMenu extends Component {
       }
     }
   };
-  
-  /**
-   * Toggle mobile menu open/closed
-   */
-  toggleMobileMenu = () => {
-    this.setState(prevState => ({
-      mobileMenuOpen: !prevState.mobileMenuOpen,
-      activeMenu: null
-    }));
-  };
 
   render() {
-    const { data } = this.props;
-    const { activeMenu, isMobileView, mobileMenuOpen } = this.state;
+    const { data, isMobileView, mobileMenuOpen, onMenuClose } = this.props;
+    const { activeMenu } = this.state;
     
     // If no data is provided, don't render anything
     if (!data || !data.topMenu || !data.topMenu.items) {
       return null;
     }
 
+    // If a submenu is opened and then closed, notify parent
+    if (activeMenu === null && this.prevActiveMenu !== null) {
+      onMenuClose && onMenuClose();
+    }
+    this.prevActiveMenu = activeMenu;
+
     return (
       <div className="megamenu-container" onMouseLeave={this.handleMenuLeave}>
         <nav className="megamenu" aria-label="Main Navigation">
-          {isMobileView && (
-            <button 
-              className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
-              onClick={this.toggleMobileMenu}
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle menu"
-            >
-              <span className="menu-icon"></span>
-              <span className="sr-only">Menu</span>
-            </button>
-          )}
-          
           <ul className={`top-menu ${isMobileView && mobileMenuOpen ? 'mobile-open' : ''}`}>
             {data.topMenu.items.map((item) => (
               <li
@@ -162,7 +117,6 @@ class MegaMenu extends Component {
         {/* Render submenu outside the top menu as a sibling element */}
         {activeMenu !== null && data.subMenus[activeMenu] && (
           <div className="submenu-wrapper">
-            {console.log('MegaMenu - submenu data:', data.subMenus[activeMenu])}
             <SubMenu 
               columns={data.subMenus[activeMenu]} 
               isMobileView={isMobileView}

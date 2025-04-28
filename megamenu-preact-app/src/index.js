@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import MegaMenu from './components/MegaMenu';
+import Header from './components/Header';
 import './styles/megamenu.css';
 
 // Entry point for the application
@@ -7,7 +7,7 @@ const init = () => {
   const container = document.getElementById('megamenu-container');
   
   if (container && window.megamenuData) {
-    render(<MegaMenu data={window.megamenuData} />, container);
+    render(<Header data={window.megamenuData} />, container);
   }
 };
 
@@ -18,5 +18,6 @@ if (document.readyState === 'loading') {
   init();
 }
 
-// Export the component for usage
-export default MegaMenu;
+// Export the components for usage
+export { default as Header } from './components/Header';
+export { default as MegaMenu } from './components/MegaMenu';
