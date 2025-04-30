@@ -179,9 +179,10 @@
 .small-menu li {
   margin: 0;
   padding: 0;
+  padding-top: 0.25em;
 }
 
-.small-menu a {
+.small-menu li a {
   display: block;
   padding: 0.5rem 0.75rem;
   color: white;
