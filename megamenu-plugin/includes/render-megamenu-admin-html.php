@@ -10,6 +10,11 @@ function render_megamenu_admin_html($menu_items, $config, $menus) {
         echo '<p class="description">No items found in the selected menu</p>';
         return;
     }
+    // Export/Import buttons
+    echo '<div style="margin-bottom:16px;">';
+    echo '<button type="button" class="button export-config">Export JSON</button> ';
+    echo '<button type="button" class="button import-config">Import JSON</button>';
+    echo '</div>';
     // Tab navigation
     echo '<div class="megamenu-tabs-container">';
     echo '<div class="megamenu-tab-nav">';

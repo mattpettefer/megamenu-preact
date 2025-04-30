@@ -87,15 +87,45 @@
             e.preventDefault();
             const $column = $(this).closest('.submenu-column');
             const $menusContainer = $column.find('.column-menus');
-            // Use a template for menu link
-            const $newMenu = $(
-                '<div class="column-menu">' +
-                    '<input type="text" name="" class="menu-title" placeholder="Menu Title">' +
-                    '<input type="url" name="" class="menu-url" placeholder="Menu URL">' +
-                    '<button type="button" class="button remove-menu">Remove Menu</button>' +
-                '</div>'
-            );
-            $menusContainer.append($newMenu);
+            const colIdx = $column.data('column-index') || 0;
+            const $submenuItem = $column.closest('.submenu-item');
+            const itemId = $submenuItem.data('item-id') || '';
+            const menuIdx = $menusContainer.children('.column-menu').length;
+
+            // AJAX fetch menus using plugin's existing endpoint and nonce
+            $.ajax({
+                url: megamenuAdmin.ajaxUrl,
+                method: 'POST',
+                data: {
+                    action: 'get_available_menus',
+                    nonce: megamenuAdmin.nonce
+                },
+                success: function(response) {
+                    let menuOptions = '<option value="">-- Select Menu --</option>';
+                    if (response.success && response.data && Array.isArray(response.data.menus)) {
+                        response.data.menus.forEach(function(menu, idx) {
+                            // Select the menu at index = menuIdx
+                            const selected = (idx === menuIdx) ? ' selected' : '';
+                            menuOptions += '<option value="' + menu.term_id + '"' + selected + '>' + menu.name + '</option>';
+                        });
+                    } else {
+                        menuOptions += '<option disabled>No menus found</option>';
+                    }
+                    const $newMenu = $(
+                        '<div class="column-menu" data-menu-index="' + menuIdx + '">' +
+                            '<select class="menu-select-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][menus]['+menuIdx+'][id]">' +
+                                menuOptions +
+                            '</select>' +
+                            '<input type="text" class="menu-title-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][menus]['+menuIdx+'][title]" placeholder="Menu Title">' +
+                            '<button type="button" class="button remove-menu">Remove</button>' +
+                        '</div>'
+                    );
+                    $menusContainer.append($newMenu);
+                },
+                error: function() {
+                    alert('Could not fetch menus from server.');
+                }
+            });
         }
 
         // Remove a menu link
@@ -134,11 +164,15 @@
 
         // Import/export configuration handlers
         function attachImportExportHandlers() {
-            // Export
+            // Ensure file input exists for import
+            if ($('#import-file').length === 0) {
+                $('body').append('<input type="file" id="import-file" accept="application/json" style="display:none" />');
+            }
+            // Export current config as JSON
             $('.export-config').off('click').on('click', function(e) {
                 e.preventDefault();
-                const $form = $(this).closest('form');
-                const data = $form.serializeArray();
+                // Use the JS config object for export
+                const data = window.megamenuConfig || {};
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -149,7 +183,7 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
             });
-            // Import
+            // Import config from JSON file
             $('.import-config').off('click').on('click', function(e) {
                 e.preventDefault();
                 $('#import-file').trigger('click');
@@ -161,14 +195,99 @@
                 reader.onload = function(evt) {
                     try {
                         const imported = JSON.parse(evt.target.result);
-                        // TODO: Apply imported config to form (requires custom logic)
-                        alert('Import successful (apply logic to update form)');
+                        window.megamenuConfig = imported;
+                        applyConfigToForm(imported);
+                        alert('Import successful! The form has been updated. Review and save to persist changes.');
                     } catch (err) {
                         alert('Invalid JSON file.');
                     }
                 };
                 reader.readAsText(file);
             });
+
+            // Helper to apply imported config to form fields
+            function applyConfigToForm(config) {
+                // Helper to build menus after we have menu list
+                function buildMenusAndColumns(menusList) {
+                    // Set top menu
+                    if (config.top_menu) {
+                        $('#top_menu').val(config.top_menu).trigger('change');
+                    }
+                    // For each submenu item (tab/panel)
+                    if (config.submenu_columns) {
+                        Object.keys(config.submenu_columns).forEach(function(itemId) {
+                            const columns = config.submenu_columns[itemId];
+                            const $submenuItem = $('.submenu-item[data-item-id="'+itemId+'"]');
+                            const $columnsContainer = $submenuItem.find('.submenu-columns');
+                            $columnsContainer.empty();
+                            columns.forEach(function(col, colIdx) {
+                                // Build column
+                                let $col = $('<div class="submenu-column" data-column-index="'+colIdx+'"></div>');
+                                $col.append('<input type="text" class="column-title-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][title]" placeholder="Column Title">');
+                                $col.find('.column-title-field').val(col.title || '');
+                                $col.append('<select class="column-style-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][style]">'+
+                                    '<option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select>');
+                                $col.find('.column-style-field').val(col.style || 'vertical');
+                                // Menus
+                                let $menus = $('<div class="column-menus"></div>');
+                                (col.menus || []).forEach(function(menu, menuIdx) {
+                                    let $menu = $('<div class="column-menu" data-menu-index="'+menuIdx+'"></div>');
+                                    let menuSelect = '<select class="menu-select-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][menus]['+menuIdx+'][id]">';
+                                    menuSelect += '<option value="">-- Select Menu --</option>';
+                                    if (menusList && menusList.length) {
+                                        menusList.forEach(function(availMenu) {
+                                            menuSelect += '<option value="'+availMenu.term_id+'"'+(menu.id==availMenu.term_id?' selected':'')+'>'+availMenu.name+'</option>';
+                                        });
+                                    }
+                                    menuSelect += '</select>';
+                                    $menu.append(menuSelect);
+                                    $menu.append('<input type="text" class="menu-title-field" name="megamenu_config[submenu_columns]['+itemId+']['+colIdx+'][menus]['+menuIdx+'][title]" placeholder="Menu Title">');
+                                    $menu.find('.menu-title-field').val(menu.title || '');
+                                    $menu.append('<button type="button" class="button remove-menu">Remove</button>');
+                                    $menus.append($menu);
+                                });
+                                $col.append($menus);
+                                $col.append('<button type="button" class="button add-menu" data-item-id="'+itemId+'" data-column-index="'+colIdx+'">Add Menu</button>');
+                                $col.append('<button type="button" class="button remove-column">Remove Column</button>');
+                                $columnsContainer.append($col);
+                            });
+                        });
+                    }
+                    // Images
+                    if (config.submenu_images) {
+                        Object.keys(config.submenu_images).forEach(function(itemId) {
+                            const imgId = config.submenu_images[itemId];
+                            const $submenuItem = $('.submenu-item[data-item-id="'+itemId+'"]');
+                            $submenuItem.find('.image-id').val(imgId);
+                            // Optionally update preview (requires AJAX or preloaded URLs)
+                        });
+                    }
+                }
+                // Only fetch menus list once, cache globally
+                if (window._megamenuMenusCache && Array.isArray(window._megamenuMenusCache)) {
+                    buildMenusAndColumns(window._megamenuMenusCache);
+                } else {
+                    $.ajax({
+                        url: megamenuAdmin.ajaxUrl,
+                        method: 'POST',
+                        data: {
+                            action: 'get_available_menus',
+                            nonce: megamenuAdmin.nonce
+                        },
+                        success: function(response) {
+                            if (response.success && response.data && Array.isArray(response.data.menus)) {
+                                window._megamenuMenusCache = response.data.menus;
+                                buildMenusAndColumns(window._megamenuMenusCache);
+                            } else {
+                                alert('Could not fetch available menus for import.');
+                            }
+                        },
+                        error: function() {
+                            alert('Could not fetch available menus for import.');
+                        }
+                    });
+                }
+            }
         }
     });
 })(jQuery);
