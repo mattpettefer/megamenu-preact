@@ -59,7 +59,28 @@ class TopBarDesktop extends Component {
 
     return (
       <div className="top-bar-desktop">
-        {/* Left side - Dashboards dropdown */}
+        {/* Left side - LogoBar HTML */}
+        <div className="topbar-logobar">
+          <div className="crest">
+            <img src="https://life.edu/wp-content/themes/life/images/lifecrest.jpg" />
+          </div>
+          <h1 className="banner-logo">
+            <a className="logo2020" href="/" title="Home"><i className="icon-logo"></i></a>
+          </h1>
+        </div>
+
+        {/* Center - Small menu displayed horizontally */}
+        <div className="small-menu-container">
+          <ul className="small-menu">
+            {data.smallMenu.items.map(item => (
+              <li key={item.id}>
+                <a href={item.url}>{item.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right side - Dashboards dropdown */}
         <div className="dashboard-menu-container" ref={ref => this.dashboardRef = ref}>
           <a 
             href="#" 
@@ -71,8 +92,6 @@ class TopBarDesktop extends Component {
             Dashboards
             <span className="dropdown-indicator" aria-hidden="true"></span>
           </a>
-          
-          {/* Dashboard dropdown menu */}
           {isDashboardOpen && (
             <div className="dashboard-dropdown">
               <ul>
@@ -84,17 +103,6 @@ class TopBarDesktop extends Component {
               </ul>
             </div>
           )}
-        </div>
-        
-        {/* Right side - Small menu displayed horizontally */}
-        <div className="small-menu-container">
-          <ul className="small-menu">
-            {data.smallMenu.items.map(item => (
-              <li key={item.id}>
-                <a href={item.url}>{item.title}</a>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     );

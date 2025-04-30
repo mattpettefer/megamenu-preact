@@ -112,14 +112,6 @@ class Header extends Component {
       <header>
         <div className="header-container">
           <TopBarDesktop data={data} />
-          <div className="logoBar">
-            <div className="crest">
-                <img src="https://marvel-b1-cdn.bc0a.com/f00000000276379/www.life.edu/wp-content/themes/life/images/lifecrest.jpg" />
-            </div>
-            <h1 className="banner-logo">
-                <a className="logo2020" href="/" title="Home"><i className="icon-logo"></i></a>
-            </h1>
-          </div>
           <MegaMenu 
             data={data} 
             isMobileView={false}
