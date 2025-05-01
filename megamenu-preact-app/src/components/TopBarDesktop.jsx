@@ -95,7 +95,9 @@ class TopBarDesktop extends Component {
               aria-expanded={isDashboardOpen}
               aria-haspopup="true"
             >
-              EEE
+              <div className="eagle-icon2025">
+                <img src="https://life.edu/wp-content/themes/life/images/life_u_eagle_transparent.gif" />
+              </div>
               <span className="dropdown-indicator2025" aria-hidden="true"></span>
             </a>
             {isDashboardOpen && (

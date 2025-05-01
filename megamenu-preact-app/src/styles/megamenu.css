@@ -92,7 +92,19 @@
 /* Dashboard dropdown styles */
 .dashboard-menu-container {
   position: relative;
+  padding-right: 1.5vw;
+  padding-left: 1vw;
 }
+
+.dashboard-menu-container .active {
+  background-color: #FFE63C;
+  color: black;
+  border-top-left-radius: 1vw;
+  border-top-right-radius: 1vw;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 
 .dashboard-toggle2025 {
   display: flex;
@@ -111,7 +123,7 @@
 } */
 
 .eagle-icon2025 img {
-  height: 40px;
+  height: 30px;
 }
 
 .dashboard-toggle2025 .dropdown-indicator2025 {
@@ -121,7 +133,7 @@
   margin-left: 0.5rem;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #FFF;
+  border-top: 5px solid #000;
   transition: transform 0.2s;
 }
 
@@ -133,13 +145,15 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: white;
-  border: 1px solid #eaeaea;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #FFE63C;
+  color: black;
   min-width: 200px;
   z-index: 1000;
-  margin-top: 5px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-right: 1.5vw;
 }
 
 .dashboard-dropdown2025 ul {
@@ -168,7 +182,7 @@
 /* Small menu styles */
 .small-menu-container {
   display: flex;
-  border: 1px solid yellow;
+  border: 1px solid #FFE63C;
   border-radius: 4vw;
   line-height: 1;
 }
@@ -183,7 +197,7 @@
 .small-menu li {
   margin: 0;
   padding: 0;
-  padding-top: 0.25em;
+  padding-top: .25em;
 }
 
 .small-menu li a {
@@ -196,7 +210,7 @@
 }
 
 .small-menu li:last-child {
-  background-color: yellow;
+  background-color: #FFE63C;
   color: black;
   border-radius: 4vw;
   white-space: nowrap;
@@ -343,16 +357,16 @@
   border-radius: 3px;
 }
 
-.megamenu .top-menu li:hover a,
+/* .megamenu .top-menu li:hover a,
 .megamenu .top-menu li.active a {
   background-color: #333;
   color: white;
-}
+} */
 
-.megamenu .top-menu li:hover a::after,
+/* .megamenu .top-menu li:hover a::after,
 .megamenu .top-menu li.active a::after {
   width: 60%;
-}
+} */
 
 /* Dropdown indicator for mobile */
 .dropdown-indicator {
@@ -377,7 +391,7 @@
   justify-content: space-around;
   width: 100%;
   max-width: 100%;
-  background-color: #fff;
+  background-color: #F5F5F5;
   position: absolute;
   z-index: 100;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
