@@ -1,5 +1,6 @@
 import { h, Component, Fragment } from 'preact';
 import SubMenu from './SubMenu';
+import MobileSubMenu from './MobileSubMenu';
 
 /**
  * MobileMegaMenu Component
@@ -59,11 +60,6 @@ class MobileMegaMenu extends Component {
       return null;
     }
 
-    // If a submenu is opened and then closed, notify parent
-    if (activeMenu === null && this.prevActiveMenu !== null) {
-      onMenuClose && onMenuClose();
-    }
-    this.prevActiveMenu = activeMenu;
 
     return (
       
@@ -107,18 +103,17 @@ class MobileMegaMenu extends Component {
                 >
                   {item.title}
                   {data.subMenus[item.id] && (
-                    <span className="dropdown-indicator" aria-hidden="true"></span>
+                    <span className="dropdown-indicator-mobile" aria-hidden="true"></span>
                   )}
                 </a>
                 
                 {/* Render submenu directly below the menu item for mobile */}
                 {activeMenu === item.id && data.subMenus[item.id] && (
                   <div className="submenu-wrapper mobile">
-                    <SubMenu 
-                      columns={data.subMenus[item.id]} 
+                    <MobileSubMenu
+                      columns={data.subMenus[item.id]}
                       isMobileView={true}
                       parentId={item.id}
-                      featuredImage={data.submenuImages && data.submenuImages[item.id]}
                     />
                   </div>
                 )}
