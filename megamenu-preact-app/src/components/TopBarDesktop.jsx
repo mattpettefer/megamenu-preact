@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import SearchArea from './SearchArea';
 
 /**
  * TopBarDesktop Component
@@ -71,12 +72,7 @@ class TopBarDesktop extends Component {
 
         {/* Center & Right - Menus container */}
         <div className="topbar-menus-container">
-          <div className="search-area2025">
-            <form id="searchForm2025">
-              <input id="jsSearchValue" type="text" placeholder="SEARCH" />
-            </form>
-            <a id="jsSearchButton" href="#"><i className="icon-search2025"></i></a>
-          </div>
+          <SearchArea />
           <div className="small-menu-container">
             <ul className="small-menu">
               {data.smallMenu.items.map(item => (

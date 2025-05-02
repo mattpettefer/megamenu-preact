@@ -59,6 +59,10 @@
   background: white;
   border-radius: 3vw;
   margin-right: .5em;
+  
+  form {
+    color: black;
+  }
 
   .icon-search2025 {
     color: white;
@@ -88,6 +92,7 @@
   border-radius: 3vw;
   padding-left: 1em;
   border: unset;
+  color: black;
 }
 /* Dashboard dropdown styles */
 .dashboard-menu-container {
