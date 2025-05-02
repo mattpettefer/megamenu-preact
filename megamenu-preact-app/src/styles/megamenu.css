@@ -128,6 +128,65 @@
   }
 }
 
+.search-area2025-mobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 3vw;
+  margin-right: .5em;
+  padding: .5em;
+  
+  form {
+    color: black;
+    border: 1px solid black;
+    border-radius: 3vw;
+    width: 70%;
+  }
+
+  .icon-search2025 {
+    color: white;
+    font-family: 'life';
+    text-decoration: none;
+  }
+  #searchForm2025 input {
+    padding-top: .5em;
+    border-radius: 3vw;
+    padding-left: 1em;
+    border: unset;
+    color: black;
+    width: 80%;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .icon-search2025::before {
+    content: "\e618";
+    font-size: 13px;
+    margin-left: -2.2em;
+    display: block;
+    height: 1.9em;
+    border-radius: 50%;
+    width: 1.9em;
+    padding: .5em;
+  }
+}
+
+.icon-search2025-opener::before {
+  content: "\e618";
+  color: black;
+  font-size: 13px;
+  margin-left: -2.2em;
+  display: block;
+  height: 1.9em;
+  border-radius: 50%;
+  width: 1.9em;
+  padding: .5em;
+}
+
+
 #searchForm2025 input {
   padding-top: .5em;
   border-radius: 3vw;
@@ -135,6 +194,19 @@
   border: unset;
   color: black;
 }
+
+.close-mobile-search {
+  all: unset;
+  cursor: pointer;
+  font-size: 2em;
+  display: block;
+  height: 1em;
+  width: 1em;
+  text-align: center;
+  line-height: 1em;
+}
+
+
 /* Dashboard dropdown styles */
 .dashboard-menu-container {
   position: relative;

@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import SearchArea from './SearchArea';
+import MobileSearchArea from './MobileSearchArea';
 
 /**
  * TopBarMobile Component
@@ -7,7 +8,8 @@ import SearchArea from './SearchArea';
  */
 class TopBarMobile extends Component {
   state = {
-    isDashboardOpen: false
+    isDashboardOpen: false,
+    searchMode: false
   };
 
   toggleDashboard = (e) => {
@@ -27,6 +29,9 @@ class TopBarMobile extends Component {
     }
   };
 
+  handleOpenSearch = () => this.setState({ searchMode: true });
+  handleCloseSearch = () => this.setState({ searchMode: false });
+
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('click', this.handleClickOutside);
@@ -37,6 +42,15 @@ class TopBarMobile extends Component {
     document.removeEventListener('click', this.handleClickOutside);
   }
 
+  handleKeyDown = (e) => {
+    if (e.key === 'Escape' && this.state.searchMode) {
+      this.handleCloseSearch();
+    }
+    if (e.key === 'Escape' && this.state.isDashboardOpen) {
+      this.closeDashboard();
+    }
+  };
+
   handleClickOutside = (e) => {
     if (this.dashboardRef && !this.dashboardRef.contains(e.target) && this.state.isDashboardOpen) {
       this.closeDashboard();
@@ -45,10 +59,14 @@ class TopBarMobile extends Component {
 
   render() {
     const { data } = this.props;
-    const { isDashboardOpen } = this.state;
+    const { isDashboardOpen, searchMode } = this.state;
 
     if (!data || !data.dashboards) {
       return null;
+    }
+
+    if (searchMode) {
+      return <MobileSearchArea onClose={this.handleCloseSearch} />;
     }
 
     return (
@@ -63,34 +81,17 @@ class TopBarMobile extends Component {
           </h1>
         </div>
 
-        {/* Search and Dashboard */}
+        {/* Search icon and Dashboard */}
         <div className="topbar-menus-container">
-          <SearchArea />
-          <div className="dashboard-menu-container" ref={ref => this.dashboardRef = ref}>
-            <a
-              href="#"
-              className={`dashboard-toggle2025 ${isDashboardOpen ? 'active' : ''}`}
-              onClick={this.toggleDashboard}
-              aria-expanded={isDashboardOpen}
-              aria-haspopup="true"
-            >
-              <div className="eagle-icon2025">
-                <img src="https://life.edu/wp-content/themes/life/images/life_u_eagle_transparent.gif" />
-              </div>
-              <span className="dropdown-indicator2025" aria-hidden="true"></span>
-            </a>
-            {isDashboardOpen && (
-              <div className="dashboard-dropdown2025">
-                <ul>
-                  {data.dashboards.items.map(item => (
-                    <li key={item.id}>
-                      <a href={item.url}>{item.title}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          <button
+            type="button"
+            className="mobile-search-trigger"
+            aria-label="Open search"
+            onClick={this.handleOpenSearch}
+            style={{ background: 'none', border: 'none', padding: 0, marginRight: '1em', cursor: 'pointer' }}
+          >
+            <i className="icon-search2025-opener"></i>
+          </button>
         </div>
       </div>
     );
