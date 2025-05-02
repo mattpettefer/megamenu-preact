@@ -1,6 +1,8 @@
 import { h, Component } from 'preact';
 import MegaMenu from './MegaMenu';
 import TopBarDesktop from './TopBarDesktop';
+import TopBarMobile from './TopBarMobile';
+import MobileMegaMenu from './MobileMegaMenu';
 
 /**
  * Header Component
@@ -66,38 +68,14 @@ class Header extends Component {
 
   renderMobileHeader() {
     const { data } = this.props;
-    const { mobileMenuOpen } = this.state;
-    
     return (
-      <header className="site-header mobile">
+      <header>
         <div className="header-container">
-          {/* Logo area */}
-          <div className="logo-container">
-            <a href="/" className="site-logo">
-              {data.logo ? (
-                <img src={data.logo} alt={data.siteTitle || 'Site Logo'} />
-              ) : (
-                <span className="site-title">{data.siteTitle || 'Site Title'}</span>
-              )}
-            </a>
-          </div>
-          
-          {/* Mobile menu toggle button */}
-          <button 
-            className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
-            onClick={this.toggleMobileMenu}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            <span className="menu-icon"></span>
-            <span className="sr-only">Menu</span>
-          </button>
-          
-          {/* MegaMenu component for mobile */}
-          <MegaMenu 
-            data={data} 
-            isMobileView={true} 
-            mobileMenuOpen={mobileMenuOpen}
+          <TopBarMobile data={data} />
+          <MobileMegaMenu
+            data={data}
+            isMobileView={true}
+            mobileMenuOpen={this.state.mobileMenuOpen}
             onMenuClose={() => this.setState({ mobileMenuOpen: false })}
           />
         </div>

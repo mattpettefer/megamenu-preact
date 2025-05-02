@@ -61,7 +61,7 @@
     margin: 0 1em;
 
     img {
-      height: 60px!important;
+      height: 40px!important;
       padding-top: 5px;
     }
   }
@@ -135,12 +135,13 @@
   background: white;
   border-radius: 3vw;
   margin-right: .5em;
+  margin-top: .5em;
   padding: .5em;
   
   form {
     color: black;
-    border: 1px solid black;
-    border-radius: 3vw;
+    border: 2px solid black;
+    border-radius: 8px;
     width: 70%;
   }
 

@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import TopBarMobile from './TopBarMobile';
 import SubMenu from './SubMenu';
 
 /**
@@ -68,7 +67,6 @@ class MobileMegaMenu extends Component {
 
     return (
       <div className="megamenu-container mobile">
-        <TopBarMobile data={data} />
         <nav className="megamenu" aria-label="Main Navigation">
           <ul className={`top-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
             {data.topMenu.items.map((item) => (
