@@ -83,6 +83,17 @@
     font-size: 30px;
     text-decoration: none;
   }
+
+  .hamburger2025 {
+    background: linear-gradient(180deg, #000, #000 20%, #fff 0, #fff 40%, #000 0, #000 60%, #fff 0, #fff 80%, #000 0, #000);
+    bottom: 0;
+    content: "";
+    height: 1em;
+    left: -1.25em;
+    width: 1.5em;
+    cursor: pointer;
+    margin: 0 2vw;
+  }
 }
 
 .topbar-menus-container {
@@ -178,7 +189,7 @@
 .icon-search2025-opener::before {
   content: "\e618";
   color: black;
-  font-size: 13px;
+  font-size: 20px;
   margin-left: -2.2em;
   display: block;
   height: 1.9em;

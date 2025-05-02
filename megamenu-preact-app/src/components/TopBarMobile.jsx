@@ -81,8 +81,8 @@ class TopBarMobile extends Component {
           </h1>
         </div>
 
-        {/* Search icon and Dashboard */}
-        <div className="topbar-menus-container">
+        {/* Search icon and Hamburger menu */}
+        <div className="topbar-menus-container" style={{ display: 'flex', alignItems: 'center' }}>
           <button
             type="button"
             className="mobile-search-trigger"
@@ -91,6 +91,13 @@ class TopBarMobile extends Component {
             style={{ background: 'none', border: 'none', padding: 0, marginRight: '1em', cursor: 'pointer' }}
           >
             <i className="icon-search2025-opener"></i>
+          </button>
+          <button
+            type="button"
+            className="mobile-menu-toggle hamburger2025"
+            aria-label="Open menu"
+            onClick={this.props.onMenuToggle}
+          >
           </button>
         </div>
       </div>
