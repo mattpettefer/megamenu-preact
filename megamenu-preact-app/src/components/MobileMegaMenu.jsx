@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h, Component, Fragment } from 'preact';
 import SubMenu from './SubMenu';
 
 /**
@@ -66,9 +66,34 @@ class MobileMegaMenu extends Component {
     this.prevActiveMenu = activeMenu;
 
     return (
+      
       <div className="megamenu-container mobile">
+        {mobileMenuOpen && (
+          <>
+            <div className="small-menu-mobile">
+              <ul>
+                {data.smallMenu.items.map(item => (
+                  <li key={item.id}>
+                    <a href={item.url}>{item.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="dashboard-mobile2025">
+              <h4>Dashboards</h4>
+              <ul>
+                {data.dashboards.items.map(item => (
+                  <li key={item.id}>
+                    <a href={item.url}>{item.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
         <nav className="megamenu" aria-label="Main Navigation">
           <ul className={`top-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+            
             {data.topMenu.items.map((item) => (
               <li
                 key={item.id}
