@@ -151,6 +151,7 @@
   margin-right: .5em;
   margin-top: .5em;
   padding: .5em;
+  padding-bottom: 1em;
   
   form {
     color: black;
@@ -278,6 +279,40 @@
 .dashboard-mobile2025 li a {
   display: block;
   background-color: #f1f1f1;
+  text-align: center;
+  padding: 20px 10px;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Dashboard section */
+.extra-menu-mobile2025 {
+  padding: 20px;
+}
+
+.extra-menu-mobile2025 h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.extra-menu-mobile2025 ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.extra-menu-mobile2025 li a {
+  display: block;
+  background-color: #bbb;
   text-align: center;
   padding: 20px 10px;
   text-decoration: none;
@@ -891,6 +926,7 @@ ul.top-menu.mobile-open > li > a {
   color: #000;
   display: inline-block;
   transition: transform 0.3s ease;
+
 }
 
 li.active2025 > a > .dropdown-indicator-mobile::after {

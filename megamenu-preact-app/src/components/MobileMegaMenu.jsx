@@ -119,8 +119,21 @@ class MobileMegaMenu extends Component {
                 )}
               </li>
             ))}
+        </ul>
+      </nav>
+      {/* Extra Menu Section (mirrors dashboards, after megamenu) */}
+      {mobileMenuOpen && data.extraMenu && data.extraMenu.items && data.extraMenu.items.length > 0 && (
+        <div className="extra-menu-mobile2025">
+          <h4>Resources</h4>
+          <ul>
+            {data.extraMenu.items.map(item => (
+              <li key={item.id}>
+                <a href={item.url}>{item.title}</a>
+              </li>
+            ))}
           </ul>
-        </nav>
+        </div>
+      )}
       </div>
     );
   }
