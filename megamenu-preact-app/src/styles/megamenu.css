@@ -42,6 +42,9 @@
     font-size: 50px;
     text-decoration: none;
   }
+  .active a {
+    color: white !important;
+  }
 }
 
 /* Top Bar Mobile Styles */
@@ -229,6 +232,7 @@
   background-color: #fff;
   gap: 3px;
   line-height: .8;
+  white-space: nowrap;
 }
 
 .small-menu-mobile li {
@@ -395,7 +399,6 @@
   padding: 0;
   padding-top: .25em;
 }
-
 .small-menu li a {
   display: block;
   padding: 0.5rem 0.75rem;
@@ -407,19 +410,19 @@
 
 .small-menu li:last-child {
   background-color: #FFE63C;
-  color: black;
   border-radius: 4vw;
   white-space: nowrap;
   flex-shrink: 0;
-
-
- a,
- a:hover,
- a:active2025,
- a:focus {
-  color: black;
- }
 }
+
+/* This targets the anchor inside the last li */
+.small-menu li:last-child a,
+.small-menu li:last-child a:hover,
+.small-menu li:last-child a:focus,
+.small-menu li:last-child a:active {
+  color: black !important;
+}
+
 
 
 
@@ -540,7 +543,7 @@
   transition: color 0.2s ease;
 }
 
-.megamenu .top-menu li a::after {
+/* .megamenu .top-menu li a::after {
   content: '';
   position: absolute;
   width: 0;
@@ -551,7 +554,7 @@
   transform: translateX(-50%);
   transition: width 0.3s ease;
   border-radius: 3px;
-}
+} */
 
 /* .megamenu .top-menu li:hover a,
 .megamenu .top-menu li.active2025 a {
@@ -850,9 +853,6 @@
   list-style: none;
 }
 
-.submenu-columns-mobile a, a:link, a:visited{
-  color: black!important;
-}
 
 /* Tier 1: green main menu */
 ul.top-menu.mobile-open {
