@@ -86,7 +86,7 @@ class TopBarDesktop extends Component {
           <div className="dashboard-menu-container" ref={ref => this.dashboardRef = ref}>
             <a 
               href="#" 
-              className={`dashboard-toggle2025 ${isDashboardOpen ? 'active' : ''}`}
+              className={`dashboard-toggle2025 ${isDashboardOpen ? 'active2025' : ''}`}
               onClick={this.toggleDashboard}
               aria-expanded={isDashboardOpen}
               aria-haspopup="true"

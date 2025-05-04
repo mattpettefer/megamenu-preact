@@ -93,7 +93,7 @@ class MobileMegaMenu extends Component {
             {data.topMenu.items.map((item) => (
               <li
                 key={item.id}
-                className={activeMenu === item.id ? 'active' : ''}
+                className={activeMenu === item.id ? 'active2025' : ''}
               >
                 <a 
                   href={item.url}
