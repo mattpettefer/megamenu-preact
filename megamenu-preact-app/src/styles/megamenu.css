@@ -572,7 +572,6 @@
   width: 100%;
   max-width: 100%;
   background-color: #F5F5F5;
-  position: absolute;
   z-index: 100;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   padding: 20px 30px;
@@ -767,7 +766,6 @@
   .megamenu .top-menu {
     display: none;
     flex-direction: column;
-    position: absolute;
     top: 100%;
     left: 0;
     right: 0;
@@ -796,7 +794,8 @@
   
   .megamenu-container .submenu.mobile {
     flex-direction: column;
-    padding: 10px;
+    padding: 0!important;
+    margin: 0!important;
   }
   
   .megamenu-container .submenu.mobile .column {
@@ -855,101 +854,118 @@
   color: black!important;
 }
 
-/* General reset and base styles */
+/* Tier 1: green main menu */
 ul.top-menu.mobile-open {
+  background-color: #8ad038;
   list-style: none;
-  padding: 0;
   margin: 0;
-  background-color: #97cc3b; /* green */
-  font-family: Arial, sans-serif;
-  font-weight: bold;
+  padding: 0;
+  width: 100%;
 }
 
 ul.top-menu.mobile-open > li {
-  border-bottom: 1px solid #87bb35;
-  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 ul.top-menu.mobile-open > li > a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  color: white;
   text-decoration: none;
-  font-size: 18px;
-}
-
-ul.top-menu.mobile-open > li > a .dropdown-indicator-mobile {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background: white;
-  border-radius: 50%;
-  position: relative;
-}
-
-ul.top-menu.mobile-open > li > a .dropdown-indicator-mobile::after {
-  content: '›';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
   font-size: 16px;
 }
 
-/* Rotate arrow when expanded */
-ul.top-menu.mobile-open > li.active2025 > a .dropdown-indicator-mobile::after {
-  content: '⌄'; /* downward arrow */
+.dropdown-indicator-mobile::after {
+  content: "❯";
+  font-size: 18px;
+  color: #fff;
+  margin-left: 10px;
 }
 
-/* Submenu wrapper */
+/* Tier 2: submenu wrapper — always inline */
 .submenu-wrapper.mobile {
-  background: #f2f2f2;
-  padding: 10px 0;
+  position: static;
+  display: block;
+  background-color: #f5f5f5;
+  padding: 0;
+  width: 100%;
+  box-shadow: none;
+  margin: 0;
 }
 
-.submenu.mobile {
-  padding: 0 16px;
-}
-
+/* Tier 3: accordion container */
 .submenu-columns-mobile {
   display: flex;
   flex-direction: column;
-  gap: 10px;
 }
 
-/* For two columns on wider mobile screens */
-@media (min-width: 480px) {
-  .submenu-columns-mobile {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-
-/* Submenu columns */
-.submenu-column-mobile {
-  flex: 1;
-}
-
-/* Accordion buttons inside tier 3 */
-.mobile-menu-accordion {
-  margin-bottom: 10px;
-}
-
+/* Accordion button */
 .mobile-menu-title {
   width: 100%;
-  background: #ccc;
+  background-color: #bbb;
   border: none;
-  padding: 12px;
-  font-size: 16px;
+  padding: 15px;
   text-align: left;
+  font-size: 14px;
   font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
+  position: relative;
 }
 
-/* Optional: Accordion expanded style */
-.mobile-menu-title[aria-expanded="true"] {
-  background: #aaa;
+.mobile-menu-title::after {
+  content: "❯";
+  position: absolute;
+  right: 15px;
+  font-size: 16px;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-title[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+/* Tier 4: accordion content (visible if expanded) */
+.mobile-menu-content {
+  display: none;
+  background-color: #f9f9f9;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+}
+
+.mobile-menu-title[aria-expanded="true"] + .mobile-menu-content {
+  display: block;
+}
+
+/* Nested list inside accordion content */
+.mobile-menu-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-menu-content li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.mobile-menu-content li:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu-content a {
+  text-decoration: none;
+  color: #222;
+  font-weight: normal;
+}
+
+.mobile-menu-list {
+  list-style: none;
+  text-align: left;
+  padding-left: 1em;
 }

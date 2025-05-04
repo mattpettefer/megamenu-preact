@@ -18,38 +18,45 @@ export default function MobileSubMenu({ columns = [], isMobileView, parentId }) 
     }));
   };
 
+  // Flatten all menus from all columns
+  const allMenus = columns.reduce((acc, col) => {
+    if (Array.isArray(col.menus)) {
+      return acc.concat(col.menus);
+    }
+    return acc;
+  }, []);
+
+  // Track open menu index globally (since all menus are now siblings)
+  const [openMenuIdx, setOpenMenuIdx] = useState(null);
+
   return (
     <div className="submenu mobile" role="menu" aria-labelledby={`menu-item-${parentId}`}> 
       <div className="submenu-columns-mobile">
-        {columns.map((col, colIdx) => (
-          <div className="submenu-column-mobile" key={colIdx}>
-            {col.menus && col.menus.map((menu, menuIdx) => {
-              const menuTitle = menu.title || `Menu ${menuIdx + 1}`;
-              const isOpen = openMenus[colIdx] === menuIdx;
-              return (
-                <div key={menu.id || menuIdx} className="mobile-menu-accordion">
-                  <button
-                    className={`mobile-menu-title${isOpen ? ' open' : ''}`}
-                    onClick={() => handleMenuToggle(colIdx, menuIdx)}
-                    aria-expanded={isOpen}
-                    aria-controls={`mobile-menu-list-${colIdx}-${menuIdx}`}
-                  >
-                    {menuTitle}
-                  </button>
-                  {isOpen && (
-                    <ul id={`mobile-menu-list-${colIdx}-${menuIdx}`} className="mobile-menu-list">
-                      {menu.items && menu.items.map(link => (
-                        <li key={link.id}>
-                          <a href={link.url}>{link.title}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        ))}
+        {allMenus.map((menu, menuIdx) => {
+          const menuTitle = menu.title || `Menu ${menuIdx + 1}`;
+          const isOpen = openMenuIdx === menuIdx;
+          return (
+            <div key={menu.id || menuIdx} className="mobile-menu-accordion">
+              <button
+                className={`mobile-menu-title${isOpen ? ' open' : ''}`}
+                onClick={() => setOpenMenuIdx(isOpen ? null : menuIdx)}
+                aria-expanded={isOpen}
+                aria-controls={`mobile-menu-list-${menuIdx}`}
+              >
+                {menuTitle}
+              </button>
+              {isOpen && (
+                <ul id={`mobile-menu-list-${menuIdx}`} className="mobile-menu-list">
+                  {menu.items && menu.items.map(link => (
+                    <li key={link.id}>
+                      <a href={link.url}>{link.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
