@@ -61,10 +61,14 @@ class Header extends Component {
    * Toggle mobile menu open/closed
    */
   toggleMobileMenu = () => {
-    this.setState(prevState => ({
-      mobileMenuOpen: !prevState.mobileMenuOpen
-    }));
-  };
+  this.setState(prevState => {
+    const opening = !prevState.mobileMenuOpen;
+    if (opening) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    return { mobileMenuOpen: opening };
+  });
+};
 
   renderMobileHeader() {
     const { data } = this.props;
