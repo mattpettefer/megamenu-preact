@@ -36,7 +36,7 @@ class Header extends Component {
    * Check if the current view is mobile
    */
   checkMobileView = () => {
-    const isMobileView = window.innerWidth <= 768;
+    const isMobileView = window.innerWidth <= 845;
     if (isMobileView !== this.state.isMobileView) {
       this.setState({ 
         isMobileView,
