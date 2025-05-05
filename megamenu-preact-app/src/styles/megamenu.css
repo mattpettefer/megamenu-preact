@@ -1075,3 +1075,11 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   overflow-y: auto;
   z-index: 999;
 }
+
+.header-container.desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}

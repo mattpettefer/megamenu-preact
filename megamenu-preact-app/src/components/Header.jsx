@@ -92,7 +92,7 @@ class Header extends Component {
     
     return (
       <header>
-        <div className="header-container">
+        <div className="header-container desktop">
           <TopBarDesktop data={data} />
           <MegaMenu 
             data={data} 
