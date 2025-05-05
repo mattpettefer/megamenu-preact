@@ -94,7 +94,8 @@ class TopBarMobile extends Component {
           </button>
           <button
             type="button"
-            className="mobile-menu-toggle hamburger2025"
+            className={`mobile-menu-toggle hamburger2025${this.props.mobileMenuOpen ? ' close-menu-x' : ''}`}
+
             aria-label="Open menu"
             onClick={this.props.onMenuToggle}
           >

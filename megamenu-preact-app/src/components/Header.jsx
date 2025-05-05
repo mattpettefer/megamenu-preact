@@ -71,7 +71,7 @@ class Header extends Component {
     return (
       <header>
         <div className="header-container">
-          <TopBarMobile data={data} onMenuToggle={this.toggleMobileMenu} />
+          <TopBarMobile data={data} onMenuToggle={this.toggleMobileMenu} mobileMenuOpen={this.state.mobileMenuOpen} />
           <MobileMegaMenu
             data={data}
             isMobileView={true}
