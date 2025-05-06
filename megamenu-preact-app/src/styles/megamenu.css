@@ -324,6 +324,10 @@
   border-right: none;
 }
 
+.small-menu-mobile a:hover {
+  background-color: #8cc63e;
+}
+
 /* Dashboard section */
 .dashboard-mobile2025 {
   padding: 20px;
@@ -358,8 +362,14 @@
   border: 1px solid #e0e0e0;
 }
 
+.dashboard-mobile2025 li a:hover {
+  background-color: #ffe63c;
+}
+
 /* Dashboard section */
 .extra-menu-mobile2025 {
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,0.18);
+
   padding: 20px;
 }
 
@@ -392,6 +402,10 @@
   border: 1px solid #e0e0e0;
 }
 
+.extra-menu-mobile2025 li a:hover {
+  background-color: #ffe63c;
+}
+
 
 /* Dashboard dropdown styles */
 .dashboard-menu-container {
@@ -399,16 +413,18 @@
   padding-right: 1.5vw;
   padding-left: 1vw;
 }
-
+.dashboard-menu-container a:hover {
+  background-color: #ffe63c;
+  border-radius: 1vw;
+}
 .dashboard-menu-container .active {
   background-color: #FFE63C;
   color: black;
   border-top-left-radius: 1vw;
   border-top-right-radius: 1vw;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0!important;
+  border-bottom-right-radius: 0!important;
 }
-
 
 .dashboard-toggle2025 {
   display: flex;
@@ -677,6 +693,16 @@
   margin-right: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.megamenu-container .menu-item a {
+  display: inline-block;
+  width: auto;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.megamenu-container .menu-item a:hover {
+  background-color: #ffe63c;
 }
 
 .megamenu-container .submenu .column:last-child {
@@ -955,6 +981,18 @@ ul.top-menu.mobile-open > li {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+ul.top-menu.mobile-open > li:hover,
+ul.top-menu.mobile-open > li:active,
+ul.top-menu.mobile-open > li:focus {
+  background: #000;
+}
+
+ul.top-menu.mobile-open > li:hover > a,
+ul.top-menu.mobile-open > li:active > a,
+ul.top-menu.mobile-open > li:focus > a {
+  color: #fff;
+}
+
 ul.top-menu.mobile-open > li > a {
   display: flex;
   justify-content: space-between;
@@ -1009,6 +1047,10 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   text-transform: uppercase;
   cursor: pointer;
   position: relative;
+}
+
+.mobile-menu-title:hover {
+  background-color: #ffe63c;
 }
 
 .mobile-menu-title::after {

@@ -54,7 +54,7 @@ const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
                     role="menu"
                   >
                     {menu.items && menu.items.map((item) => (
-                      <li key={item.id} role="menuitem">
+                      <li key={item.id} role="menuitem" className="menu-item">
                         <a href={item.url}>{item.title}</a>
                       </li>
                     ))}
