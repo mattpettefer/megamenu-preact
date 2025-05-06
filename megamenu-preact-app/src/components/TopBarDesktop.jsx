@@ -75,8 +75,8 @@ class TopBarDesktop extends Component {
           <SearchArea />
           <div className="small-menu-container">
             <ul className="small-menu">
-              {data.smallMenu.items.map(item => (
-                <li key={item.id}>
+              {data.smallMenu.items.map((item, idx, arr) => (
+                <li key={item.id}  className={idx === arr.length - 1 ? 'apply-button' : ''}>
                   <a href={item.url}>{item.title}</a>
                 </li>
               ))}
@@ -86,7 +86,7 @@ class TopBarDesktop extends Component {
           <div className="dashboard-menu-container" ref={ref => this.dashboardRef = ref}>
             <a 
               href="#" 
-              className={`dashboard-toggle2025 ${isDashboardOpen ? 'active2025' : ''}`}
+              className={`dashboard-toggle2025 ${isDashboardOpen ? 'active' : ''}`}
               onClick={this.toggleDashboard}
               aria-expanded={isDashboardOpen}
               aria-haspopup="true"
