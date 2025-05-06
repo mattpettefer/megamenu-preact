@@ -703,16 +703,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-.megamenu-container .menu-item a {
-  display: inline-block;
-  width: auto;
-  padding: 6px 14px;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-.megamenu-container .menu-item a:hover {
-  background-color: #ffe63c;
-}
+
 
 .megamenu-container .submenu .column:last-child {
   margin-right: 0;
@@ -1113,8 +1104,17 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
 .mobile-menu-list {
   list-style: none;
   text-align: left;
-  padding-left: 1em;
+  padding: 0;
 }
+
+.mobile-menu-list li:hover {
+  background-color: #8ad038;
+}
+
+.mobile-menu-list li:hover a {
+  color: white!important;
+}
+
 
 .top-bar-mobile {
   position: fixed;
