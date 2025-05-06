@@ -275,6 +275,10 @@
   padding: .5em;
 }
 
+.icon-search2025-opener:hover::before {
+  color: #8cc63e!important;
+}
+
 
 #searchForm2025 input {
   padding-top: .5em;
