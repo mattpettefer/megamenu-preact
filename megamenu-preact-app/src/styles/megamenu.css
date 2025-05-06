@@ -311,7 +311,7 @@
   padding: 15px 10px;
   text-decoration: none;
   font-weight: bold;
-  color: #000;
+  color: #000!important;
   text-transform: uppercase;
 }
 
@@ -321,6 +321,7 @@
 
 .small-menu-mobile a:hover {
   background-color: #8cc63e;
+  color: #000!important;
 }
 
 /* Dashboard section */
