@@ -495,6 +495,15 @@
   margin: 0;
 }
 
+.dashboard-dropdown2025 li:hover {
+  background-color: white;
+}
+
+.dashboard-dropdown2025 li:hover a {
+  color: black!important;
+  background-color: white;
+}
+
 .dashboard-dropdown2025 a {
   display: block;
   padding: 0.75rem 1rem;
