@@ -176,7 +176,8 @@
     text-decoration: none;
   }
 
-  .icon-search2025:hover {
+  .icon-search2025:hover,
+  .icon-search2025:active {
     color: #ffe600!important;
   }
 
@@ -262,7 +263,8 @@
   padding: .5em;
 }
 
-.icon-search2025-opener:hover::before {
+.icon-search2025-opener:hover::before,
+.icon-search2025-opener:active::before {
   color: #8cc63e!important;
 }
 
@@ -319,7 +321,8 @@
   border-right: none;
 }
 
-.small-menu-mobile a:hover {
+.small-menu-mobile a:hover,
+.small-menu-mobile a:active {
   background-color: #8cc63e;
   color: #000!important;
 }
@@ -358,7 +361,8 @@
   border: 1px solid #e0e0e0;
 }
 
-.dashboard-mobile2025 li a:hover {
+.dashboard-mobile2025 li a:hover,
+.dashboard-mobile2025 li a:active {
   background-color: #ffe63c;
 }
 
@@ -398,7 +402,8 @@
   border: 1px solid #e0e0e0;
 }
 
-.extra-menu-mobile2025 li a:hover {
+.extra-menu-mobile2025 li a:hover,
+.extra-menu-mobile2025 li a:active {
   background-color: #ffe63c;
 }
 
@@ -409,7 +414,8 @@
   padding-right: 1.5vw;
   padding-left: 1vw;
 }
-.dashboard-menu-container a:hover {
+.dashboard-menu-container a:hover,
+.dashboard-menu-container a:active {
   background-color: #ffe63c;
   border-radius: 1vw;
 }
@@ -491,11 +497,13 @@
   margin: 0;
 }
 
-.dashboard-dropdown2025 li:hover {
+.dashboard-dropdown2025 li:hover,
+.dashboard-dropdown2025 li:active {
   background-color: white;
 }
 
-.dashboard-dropdown2025 li:hover a {
+.dashboard-dropdown2025 li:hover a,
+.dashboard-dropdown2025 li:active a {
   color: black!important;
   background-color: white;
 }
@@ -543,13 +551,14 @@
   transition: color 0.2s;
 }
 
-.small-menu li:hover {
+.small-menu li:hover,
+.small-menu li:active {
   background-color: #FFE63C;
   color: black;
   border-radius: 4px;
 }
 
-.small-menu li:hover, .small-menu li.apply-button{
+.small-menu li:hover, .small-menu li:active, .small-menu li.apply-button{
   background-color: #FFE63C;
   border-radius: 4vw;
   white-space: nowrap;
@@ -560,7 +569,8 @@
     }
 }
 
-.apply-button:hover{
+.apply-button:hover,
+.apply-button:active{
   background-color: #fff!important;
 }
 
@@ -800,7 +810,8 @@
   transition: color 0.2s ease;
 }
 
-.megamenu-container .submenu .column .menu li a:hover {
+.megamenu-container .submenu .column .menu li a:hover,
+.megamenu-container .submenu .column .menu li a:active {
   color: #0073aa;
 }
 
@@ -1045,7 +1056,8 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   position: relative;
 }
 
-.mobile-menu-title:hover {
+.mobile-menu-title:hover,
+.mobile-menu-title:active {
   background-color: #ffe63c;
 }
 
@@ -1103,11 +1115,13 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   padding: 0;
 }
 
-.mobile-menu-list li:hover {
+.mobile-menu-list li:hover,
+.mobile-menu-list li:active {
   background-color: #8ad038;
 }
 
-.mobile-menu-list li:hover a {
+.mobile-menu-list li:hover a,
+.mobile-menu-list li:active a {
   color: white!important;
 }
 
