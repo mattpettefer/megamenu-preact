@@ -98,6 +98,7 @@ class TopBarDesktop extends Component {
             </a>
             {isDashboardOpen && (
               <div className="dashboard-dropdown2025">
+                <h4>Dashboards</h4>
                 <ul>
                   {data.dashboards.items.map(item => (
                     <li key={item.id}>
