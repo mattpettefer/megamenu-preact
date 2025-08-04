@@ -11,7 +11,7 @@
   padding: 0.5rem 0;
   font-size: 0.9rem;
   border-bottom: 1px solid #eaeaea;
-  background-color: #8cc63e;
+  background-color: #036030;
   color: white;
   margin: 0;
   padding-left: 1vw;
@@ -83,7 +83,7 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    color: #8cc63e;
+    color: #036030;
     font-size: 30px;
     text-decoration: none;
   }
@@ -189,7 +189,7 @@
     content: "\e618";
     font-size: 20px;
     margin-left: -2.2em;
-    background: #8cc63e;
+    background: #036030;
     display: block;
     height: 1.9em;
     border-radius: 50%;
@@ -199,7 +199,7 @@
 }
 
 /* .search-area2025-closed {
-  background: #8cc63e;
+  background: #036030;
 } */
 
 .search-area2025-mobile {
@@ -265,7 +265,7 @@
 
 .icon-search2025-opener:hover::before,
 .icon-search2025-opener:active::before {
-  color: #8cc63e!important;
+  color: #036030!important;
 }
 
 
@@ -323,7 +323,7 @@
 
 .small-menu-mobile a:hover,
 .small-menu-mobile a:active {
-  background-color: #8cc63e;
+  background-color: #036030;
   color: #000!important;
 }
 

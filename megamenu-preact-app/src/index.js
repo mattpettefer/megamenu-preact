@@ -7,6 +7,7 @@ const init = () => {
   const container = document.getElementById('megamenu-container');
   
   if (container && window.megamenuData) {
+    container.innerHTML = '';
     render(<Header data={window.megamenuData} />, container);
   }
 };

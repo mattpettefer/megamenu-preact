@@ -63,7 +63,7 @@ class TopBarDesktop extends Component {
         {/* Left side - LogoBar HTML */}
         <div className="topbar-logobar">
           <div className="crest2025">
-            <img src="https://life.edu/wp-content/themes/life/images/lifecrest-green.jpg" />
+            <img src="/wp-content/themes/life/images/lifecrest-green.jpg" />
           </div>
           <h1 className="banner-logo2025">
             <a className="logo2025" href="/" title="Life University"><i className="icon-logo"></i></a>
