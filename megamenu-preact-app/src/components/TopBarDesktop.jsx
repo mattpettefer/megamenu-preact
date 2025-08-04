@@ -33,7 +33,6 @@ class TopBarDesktop extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
-    // Close menu when clicking outside
     document.addEventListener('click', this.handleClickOutside);
   }
 
@@ -43,7 +42,6 @@ class TopBarDesktop extends Component {
   }
 
   handleClickOutside = (e) => {
-    // Close dashboard dropdown if click is outside
     if (this.dashboardRef && !this.dashboardRef.contains(e.target) && this.state.isDashboardOpen) {
       this.closeDashboard();
     }
@@ -63,7 +61,7 @@ class TopBarDesktop extends Component {
         {/* Left side - LogoBar HTML */}
         <div className="topbar-logobar">
           <div className="crest2025">
-            <img src="/wp-content/themes/life/images/lifecrest-green.jpg" />
+            <img src="/wp-content/themes/life/images/lifecrest-transparent.png" />
           </div>
           <h1 className="banner-logo2025">
             <a className="logo2025" href="/" title="Life University"><i className="icon-logo"></i></a>
