@@ -10,7 +10,8 @@ import MobileSubMenu from './MobileSubMenu';
  */
 class MobileMegaMenu extends Component {
   state = { 
-    activeMenu: null
+    activeMenu: null,
+    dashboardsOpen: false
   };
 
   componentDidMount() {
@@ -51,9 +52,18 @@ class MobileMegaMenu extends Component {
     }
   };
 
+  /**
+   * Toggle dashboards menu visibility
+   */
+  handleDashboardsToggle = () => {
+    this.setState(prevState => ({
+      dashboardsOpen: !prevState.dashboardsOpen
+    }));
+  };
+
   render() {
     const { data, mobileMenuOpen, onMenuClose } = this.props;
-    const { activeMenu } = this.state;
+    const { activeMenu, dashboardsOpen } = this.state;
     
     // If no data is provided, don't render anything
     if (!data || !data.topMenu || !data.topMenu.items) {
@@ -76,14 +86,19 @@ class MobileMegaMenu extends Component {
               </ul>
             </div>
             <div className="dashboard-mobile2025">
-              <h4>Dashboards</h4>
-              <ul>
-                {data.dashboards.items.map(item => (
-                  <li key={item.id}>
-                    <a href={item.url}>{item.title}</a>
-                  </li>
-                ))}
-              </ul>
+              <h4 onClick={this.handleDashboardsToggle} className="clickable-header">
+                Dashboards
+                <span className="dropdown-indicator-mobile" aria-hidden="true"></span>
+              </h4>
+              {dashboardsOpen && (
+                <ul>
+                  {data.dashboards.items.map(item => (
+                    <li key={item.id}>
+                      <a href={item.url}>{item.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </>
         )}
