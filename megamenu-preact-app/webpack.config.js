@@ -15,6 +15,7 @@ module.exports = (env, argv) => {
         type: 'umd',
         export: 'default',
       },
+      clean: true, // Clean dist folder before each build
     },
     module: {
       rules: [

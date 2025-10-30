@@ -1,8 +1,10 @@
 /**
  * Megamenu Styles
  */
+/* DarkGreen #175c00 
+Light Green #8dc340 
 
-/* Top Bar Desktop Styles */
+Top Bar Desktop Styles */
 .top-bar-desktop {
   display: flex;
   justify-content: space-between;
@@ -11,7 +13,7 @@
   padding: 0.5rem 0;
   font-size: 0.9rem;
   border-bottom: 1px solid #eaeaea;
-  background-color: #036030;
+  background-color: #8dc340;
   color: white;
   margin: 0;
   padding-left: 1vw;
@@ -83,7 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    color: #036030;
+    color: #175c00;
     font-size: 30px;
     text-decoration: none;
   }
@@ -189,7 +191,7 @@
     content: "\e618";
     font-size: 20px;
     margin-left: -2.2em;
-    background: #036030;
+    background: transparent;
     display: block;
     height: 1.9em;
     border-radius: 50%;
@@ -199,7 +201,7 @@
 }
 
 /* .search-area2025-closed {
-  background: #036030;
+  background: #175c00;
 } */
 
 .search-area2025-mobile {
@@ -265,7 +267,7 @@
 
 .icon-search2025-opener:hover::before,
 .icon-search2025-opener:active::before {
-  color: #036030!important;
+  color: #175c00!important;
 }
 
 
@@ -323,7 +325,7 @@
 
 .small-menu-mobile a:hover,
 .small-menu-mobile a:active {
-  background-color: #036030;
+  background-color: #175c00;
   color: #000!important;
 }
 
@@ -420,7 +422,7 @@
   border-radius: 1vw;
 }
 .dashboard-menu-container .active {
-  background-color: #FFE63C;
+  background-color: #ffe63c;
   color: black;
   border-top-left-radius: 1vw;
   border-top-right-radius: 1vw;
@@ -467,7 +469,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background-color: #FFE63C;
+  background-color: #ffe63c;
   color: black;
   min-width: 200px;
   z-index: 1000;
@@ -523,7 +525,7 @@
 /* Small menu styles */
 .small-menu-container {
   display: flex;
-  border: 1px solid #FFE63C;
+  border: 1px solid #ffe63c;
   border-radius: 4vw;
   line-height: 1;
 }
@@ -553,13 +555,13 @@
 
 .small-menu li:hover,
 .small-menu li:active {
-  background-color: #FFE63C;
+  background-color: #ffe63c;
   color: black;
   border-radius: 4px;
 }
 
 .small-menu li:hover, .small-menu li:active, .small-menu li.apply-button{
-  background-color: #FFE63C;
+  background-color: #ffe63c;
   border-radius: 4vw;
   white-space: nowrap;
   flex-shrink: 0;

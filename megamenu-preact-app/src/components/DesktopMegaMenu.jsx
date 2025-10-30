@@ -1,12 +1,6 @@
 import { h, Component } from 'preact';
 import SubMenu from './SubMenu';
 
-/**
- * DesktopMegaMenu Component
- * 
- * Desktop-specific version of the mega menu
- * Optimized for hover interactions and desktop layout
- */
 class DesktopMegaMenu extends Component {
   state = { 
     activeMenu: null
