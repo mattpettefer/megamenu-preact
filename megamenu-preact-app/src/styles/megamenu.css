@@ -342,16 +342,18 @@ Top Bar Desktop Styles */
 }
 
 .dashboard-mobile2025 ul {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  display: block;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+.dashboard-mobile2025 ul.hidden {
+  display: none !important;
+}
+
 .dashboard-mobile2025 li a {
-  display: block;
+  /* display: block;
   background-color: #f1f1f1;
   text-align: center;
   padding: 20px 10px;
@@ -360,7 +362,7 @@ Top Bar Desktop Styles */
   font-weight: bold;
   text-transform: uppercase;
   font-size: 12px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e0e0e0; */
 }
 
 .dashboard-mobile2025 li a:hover,

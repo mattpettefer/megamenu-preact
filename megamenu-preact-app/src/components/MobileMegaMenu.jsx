@@ -88,17 +88,14 @@ class MobileMegaMenu extends Component {
             <div className="dashboard-mobile2025">
               <h4 onClick={this.handleDashboardsToggle} className="clickable-header">
                 Dashboards
-                <span className="dropdown-indicator-mobile" aria-hidden="true"></span>
               </h4>
-              {dashboardsOpen && (
-                <ul>
-                  {data.dashboards.items.map(item => (
-                    <li key={item.id}>
-                      <a href={item.url}>{item.title}</a>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <ul className={dashboardsOpen ? '' : 'hidden'}>
+                {data.dashboards.items.map(item => (
+                  <li key={item.id}>
+                    <a href={item.url}>{item.title}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </>
         )}
