@@ -80,7 +80,7 @@ class MobileMegaMenu extends Component {
               <ul>
                 {data.smallMenu.items.map(item => (
                   <li key={item.id}>
-                    <a href={item.url}>{item.title}</a>
+                    <a href={item.url}><span>{item.title}</span></a>
                   </li>
                 ))}
               </ul>
