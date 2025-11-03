@@ -201,15 +201,18 @@ Top Bar Desktop Styles */
 }
 
 .icon-search2025-mobile::before {
-  content: "\e618";
-  font-size: 20px;
-  margin-left: -2.2em;
-  background: transparent;
-  display: block;
-  height: 1.9em;
-  border-radius: 50%;
-  width: 1.9em;
-  padding: .5em;
+    content: "\e618";
+    font-size: 20px;
+    margin-top: -27px;
+    margin-left: -41px;
+    background: #8ad038;
+    display: block;
+    height: 1.9em;
+    border-radius: 50%;
+    width: 1.9em;
+    padding: .5em;
+    color: white;
+    position: absolute;
 }
 
 /* .search-area2025-closed {
@@ -229,9 +232,8 @@ Top Bar Desktop Styles */
 
   form {
     color: black;
-    border: 2px solid black;
     border-radius: 8px;
-    width: 70%;
+    width: 90%;
   }
 
   .icon-search2025 {
@@ -245,7 +247,9 @@ Top Bar Desktop Styles */
     padding-left: 1em;
     border: unset;
     color: black;
-    width: 80%;
+    width: 100%;
+    height: 3.3em;
+    background-color: #eaeaea;
   
   }
 
@@ -1164,6 +1168,7 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   background-color: #175c00;
   line-height: .8;
   white-space: nowrap;
+  font-size: 12px;
 }
 
 .small-menu-mobile li {
@@ -1234,7 +1239,7 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   line-height: 1;
   position: absolute; right: 16px; top: 50%;
   transform: translateY(-50%);
-  color: #333;
+  color: #fff;
   transition: transform .25s ease;
 }
 
@@ -1244,9 +1249,14 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   padding:0 16px;
   list-style:none;
   overflow:hidden;
-  max-height:500px;                
+  max-height:600px;                
   transition:max-height .3s ease, padding .3s ease;
-  background:#fff;
+  background:#d9d9d9;
+}
+
+.dashboard-mobile2025 > ul.hidden{
+  max-height:0 !important;
+  padding:0 !important;
 }
 .dashboard-mobile2025 > ul > li{ margin:8px 0; }
 .dashboard-mobile2025 > ul a{
@@ -1260,7 +1270,7 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
 }
 
 .dashboard-mobile2025.open > h4::after{
-  transform:translateY(-50%) rotate(180deg);
+  transform:translateY(-50%) rotate(90deg);
 }
 
 /* Keyboard focus ring if user tabs to the header */

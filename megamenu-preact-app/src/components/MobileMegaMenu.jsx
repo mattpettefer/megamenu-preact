@@ -85,7 +85,7 @@ class MobileMegaMenu extends Component {
                 ))}
               </ul>
             </div>
-            <div className="dashboard-mobile2025">
+            <div className={`dashboard-mobile2025 ${dashboardsOpen ? 'open' : ''}`}>
               <h4 onClick={this.handleDashboardsToggle} className="clickable-header">
                 Dashboards
               </h4>
