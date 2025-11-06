@@ -215,9 +215,10 @@ Top Bar Desktop Styles */
     position: absolute;
 }
 
-/* .search-area2025-closed {
-  background: #175c00;
-} */
+.search-hidden {
+  display: none !important;
+}
+
 
 .search-area2025-mobile {
   display: flex;

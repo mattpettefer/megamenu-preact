@@ -11,6 +11,7 @@ const SearchArea = () => {
   const [search, setSearch] = useState("");
   const searchRef = useRef(null);
 
+
   // Close when clicking outside
   useEffect(() => {
     function handleClickOutside(e) {
@@ -33,43 +34,26 @@ const SearchArea = () => {
       ref={searchRef}
       className={open ? 'search-area2025' : 'search-area2025 search-area2025-closed'}
     >
-      {open ? (
-        <>
-          <form id="searchForm2025" action="" method="GET" onSubmit={e => {
-            e.preventDefault();
-            if (search.trim()) {
-              window.location.href = `?s=${encodeURIComponent(search)}`;
-            }
-          }}>
-            <input
-              id="jsSearchValue"
-              type="text"
-              placeholder="SEARCH"
-              autoFocus
-              value={search}
-              onInput={e => setSearch(e.target.value)}
-            />
-          </form>
-          <a
-            href={search.trim() ? `?s=${encodeURIComponent(search)}` : "#"}
-            onClick={e => {
-              if (!search.trim()) { e.preventDefault(); return; }
-              // allow default if search is present
-            }}
-          >
-            <i className="icon-search2025"></i>
-          </a>
-        </>
-      ) : (
-        <a
-          href="#"
-          className="search-area2025-icon-link"
-          aria-label="Open search"
-          onClick={e => { e.preventDefault(); setOpen(true); }}
-        >
-          <i className="icon-search2025"></i>
-        </a>
-      )}
+      <div style={{ display: open ? 'block' : 'none' }}>
+        <script src="https://cse.google.com/cse.js?cx=a702cf19e52c34411"></script>
+        <div
+          className="gcse-searchbox-only"
+          data-gname="desktopSearch"
+          data-resultsUrl="/"
+          data-queryParameterName="s"
+          data-enableAutoComplete="true"
+          style={{ width: '100%' }}
+        ></div>
+      </div>
+      <a
+        href="#"
+        className="search-area2025-icon-link"
+        aria-label="Open search"
+        onClick={e => { e.preventDefault(); setOpen(true); }}
+        style={{ display: open ? 'none' : 'block' }}
+      >
+        <i className="icon-search2025"></i>
+      </a>
     </div>
   );
 };
