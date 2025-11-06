@@ -54,22 +54,42 @@
             e.preventDefault();
             const $submenuItem = $(this).closest('.submenu-item');
             const $columnsContainer = $submenuItem.find('.submenu-columns');
+            const itemId = $submenuItem.data('item-id') || '';
+            
+            // Calculate the new column index by finding the highest existing index
+            const existingColumns = $columnsContainer.children('.submenu-column');
+            let maxIdx = -1;
+            existingColumns.each(function() {
+                const idx = parseInt($(this).attr('data-column-index')) || 0;
+                if (idx > maxIdx) maxIdx = idx;
+            });
+            const newColIdx = maxIdx + 1;
+            
             // Clone the last column or use a template
-            let $newCol = $columnsContainer.children('.submenu-column').last().clone(true, true);
+            let $newCol = existingColumns.last().clone(true, true);
             if ($newCol.length === 0) {
                 // If no columns exist yet, create a minimal template
                 $newCol = $(
-                    '<div class="submenu-column">' +
-                        '<input type="text" name="" class="column-title" placeholder="Column Title">' +
-                        '<select class="column-style"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select>' +
+                    '<div class="submenu-column" data-column-index="0">' +
+                        '<input type="text" class="column-title-field" name="megamenu_config[submenu_columns]['+itemId+'][0][title]" placeholder="Column Title">' +
+                        '<select class="column-style-field" name="megamenu_config[submenu_columns]['+itemId+'][0][style]"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select>' +
                         '<div class="column-menus"></div>' +
-                        '<button type="button" class="button add-menu">Add Menu</button>' +
+                        '<button type="button" class="button add-menu" data-item-id="'+itemId+'" data-column-index="0">Add Menu</button>' +
                         '<button type="button" class="button remove-column">Remove Column</button>' +
                     '</div>'
                 );
             } else {
-                // Clear input values
-                $newCol.find('input, select').val('');
+                // Update the column index
+                $newCol.attr('data-column-index', newColIdx);
+                
+                // Update name attributes with new column index
+                $newCol.find('.column-title-field').attr('name', 'megamenu_config[submenu_columns]['+itemId+']['+newColIdx+'][title]');
+                $newCol.find('.column-style-field').attr('name', 'megamenu_config[submenu_columns]['+itemId+']['+newColIdx+'][style]');
+                $newCol.find('.add-menu').attr('data-column-index', newColIdx);
+                
+                // Clear input values and empty menus
+                $newCol.find('input[type="text"]').val('');
+                $newCol.find('select.column-style-field').val('vertical');
                 $newCol.find('.column-menus').empty();
             }
             $columnsContainer.append($newCol);

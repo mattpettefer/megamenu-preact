@@ -41,18 +41,18 @@ class Megamenu_Frontend {
         // Enqueue megamenu script
         wp_enqueue_script(
             'megamenu-preact',
-            MEGAMENU_PREACT_URL . 'assets/js/megamenu.js',
+            MEGAMENU_PREACT_URL . 'assets/js/megamenu0.js',
             array('preact'),
-            MEGAMENU_PREACT_VERSION,
+            date('Ymd'),
             true
         );
         
         // Enqueue megamenu styles
         wp_enqueue_style(
             'megamenu-preact',
-            MEGAMENU_PREACT_URL . 'assets/css/megamenu.css',
+            MEGAMENU_PREACT_URL . 'assets/css/megamenu0.css',
             array(),
-            MEGAMENU_PREACT_VERSION
+            date('Ymd')
         );
     }
     

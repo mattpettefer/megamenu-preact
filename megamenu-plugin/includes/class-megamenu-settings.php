@@ -71,14 +71,14 @@ class Megamenu_Settings {
             'megamenu-admin',
             MEGAMENU_PREACT_URL . 'admin/css/admin.css',
             array(),
-            MEGAMENU_PREACT_VERSION
+            date('Ymd')
         );
         
         wp_enqueue_script(
             'megamenu-admin',
             MEGAMENU_PREACT_URL . 'admin/js/admin.js',
             array('jquery'),
-            MEGAMENU_PREACT_VERSION,
+            date('Ymd'),
             true
         );
         

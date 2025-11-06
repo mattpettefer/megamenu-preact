@@ -1216,10 +1216,10 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
 .dashboard-mobile2025 > h4{
   margin:0;
   padding:12px 16px;
-  background:#000;           
+  background:#d9d9d9;           
   text-transform:uppercase;
   font-weight:800;
-  color:#FFF;
+  color:#000;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -1239,7 +1239,7 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   line-height: 1;
   position: absolute; right: 16px; top: 50%;
   transform: translateY(-50%);
-  color: #fff;
+  color: #000;
   transition: transform .25s ease;
 }
 
@@ -1251,7 +1251,7 @@ li.active2025 > a > .dropdown-indicator-mobile::after {
   overflow:hidden;
   max-height:600px;                
   transition:max-height .3s ease, padding .3s ease;
-  background:#d9d9d9;
+  background:#ffffff;
 }
 
 .dashboard-mobile2025 > ul.hidden{
