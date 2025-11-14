@@ -11,9 +11,6 @@ import { h } from 'preact';
  * @param {string} props.featuredImage - URL of the featured image for this submenu
  */
 const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
-  console.log('SubMenu - columns data:', columns);
-  console.log('SubMenu - Featured Image:', featuredImage);
-  
   if (!columns || !columns.length) {
     return null;
   }
@@ -35,8 +32,6 @@ const SubMenu = ({ columns, isMobileView, parentId, featuredImage }) => {
       
       {/* Menu columns */}
       {columns.map((column, columnIndex) => {
-        console.log(`SubMenu - Column ${columnIndex}:`, column);
-        
         // Now we can use the style property that's passed from the PHP backend
         const isHorizontal = column.style === 'horizontal';
         

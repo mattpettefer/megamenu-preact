@@ -34,8 +34,7 @@ const SearchArea = () => {
       ref={searchRef}
       className={open ? 'search-area2025' : 'search-area2025 search-area2025-closed'}
     >
-      <div style={{ display: open ? 'block' : 'none' }}>
-        <script src="https://cse.google.com/cse.js?cx=a702cf19e52c34411"></script>
+      <div class="gse-desktop" style={{ display: open ? 'block' : 'none' }}>
         <div
           className="gcse-searchbox-only"
           data-gname="desktopSearch"

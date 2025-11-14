@@ -65,41 +65,40 @@ class TopBarMobile extends Component {
       return null;
     }
 
-    if (searchMode) {
-      return <MobileSearchArea onClose={this.handleCloseSearch} />;
-    }
-
     return (
-      <div className="top-bar-mobile">
-        {/* LogoBar */}
-        <div className="topbar-logobar">
-          <div className="crest2025">
-            <img src="/wp-content/themes/life/images/lifecrest-transparent.png" />
+      <div>
+        <MobileSearchArea onClose={this.handleCloseSearch} open={searchMode} />
+        <div className="top-bar-mobile" style={{ display: searchMode ? 'none' : 'flex' }}>
+          {/* LogoBar */}
+          <div className="topbar-logobar">
+            <div className="crest2025">
+              <img src="/wp-content/themes/life/images/lifecrest-transparent.png" />
+            </div>
+            <h1 className="banner-logo2025">
+              <a className="logo2025" href="/" title="Life University"><i className="icon-logo"></i></a>
+            </h1>
           </div>
-          <h1 className="banner-logo2025">
-            <a className="logo2025" href="/" title="Life University"><i className="icon-logo"></i></a>
-          </h1>
-        </div>
 
-        {/* Search icon and Hamburger menu */}
-        <div className="topbar-menus-container" style={{ display: 'flex', alignItems: 'center' }}>
-          <button
-            type="button"
-            className="mobile-search-trigger"
-            aria-label="Open search"
-            onClick={this.handleOpenSearch}
-            style={{ background: 'none', border: 'none', padding: 0, marginRight: '1em', cursor: 'pointer' }}
-          >
-            <i className="icon-search2025-opener"></i>
-          </button>
-          <button
-            type="button"
-            className={`mobile-menu-toggle hamburger2025${this.props.mobileMenuOpen ? ' close-menu-x' : ''}`}
+          {/* Search icon and Hamburger menu */}
+          <div className="topbar-menus-container" style={{ display: 'flex', alignItems: 'center' }}>
+            <button
+              type="button"
+              className="mobile-search-trigger"
+              aria-label="Open search"
+              onClick={this.handleOpenSearch}
+              style={{ background: 'none', border: 'none', padding: 0, marginRight: '1em', cursor: 'pointer' }}
+            >
+              <i className="icon-search2025-opener"></i>
+            </button>
+            <button
+              type="button"
+              className={`mobile-menu-toggle hamburger2025${this.props.mobileMenuOpen ? ' close-menu-x' : ''}`}
 
-            aria-label="Open menu"
-            onClick={this.props.onMenuToggle}
-          >
-          </button>
+              aria-label="Open menu"
+              onClick={this.props.onMenuToggle}
+            >
+            </button>
+          </div>
         </div>
       </div>
     );
