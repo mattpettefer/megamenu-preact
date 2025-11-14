@@ -114,10 +114,17 @@ class Header extends Component {
       return null;
     }
 
-    // Render different layouts based on viewport size
-    return isMobileView 
-      ? this.renderMobileHeader()
-      : this.renderDesktopHeader();
+    // Render both layouts but control visibility with CSS
+    return (
+      <div>
+        <div style={{ display: isMobileView ? 'block' : 'none' }}>
+          {this.renderMobileHeader()}
+        </div>
+        <div style={{ display: isMobileView ? 'none' : 'block' }}>
+          {this.renderDesktopHeader()}
+        </div>
+      </div>
+    );
   }
 }
 
